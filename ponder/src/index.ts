@@ -1,23 +1,14 @@
 import { ponder } from "@/generated";
 
-ponder.on("AstariaRouter:Liquidation", async ({ event, context }) => {
-  const { LiquidationEvent } = context.db;
+ponder.on("AlloStrategy:Registered", async ({ event, context }) => {
+  const { RegisteredEvent } = context.db;
 
-  await LiquidationEvent.create({
+  await RegisteredEvent.create({
     id: event.log.id,
     data: {
-      liquidator: event.args.liquidator,
-    },
-  });
-});
-
-ponder.on("AstariaRouter:OwnershipTransferred", async ({ event, context }) => {
-  const { OwnershipTransferredEvent } = context.db;
-
-  await OwnershipTransferredEvent.create({
-    id: event.log.id,
-    data: {
-      newOwner: event.args.newOwner,
+      recipientId: event.args.recipientId,
+      data: event.args.data,
+      sender: event.args.sender,
     },
   });
 });

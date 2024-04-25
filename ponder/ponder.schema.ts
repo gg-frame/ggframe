@@ -1,12 +1,10 @@
 import { createSchema } from "@ponder/core";
 
 export default createSchema((p) => ({
-  LiquidationEvent: p.createTable({
+  RegisteredEvent: p.createTable({
     id: p.string(),
-    liquidator: p.hex(),
-  }),
-  OwnershipTransferredEvent: p.createTable({
-    id: p.string(),
-    newOwner: p.hex(),
+    recipientId: p.hex(),
+    data: p.hex(),
+    sender: p.hex(),
   }),
 }));
