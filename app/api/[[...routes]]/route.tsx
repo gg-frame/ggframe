@@ -1,7 +1,8 @@
 /** @jsxImportSource frog/jsx */
 
+import { allo } from "@/abis/Allo";
 import { fetchIPFSData, fetchPonder } from "@/hooks/useRegisteredEvent";
-import { Button, Frog, TextInput } from "frog";
+import { Button, Frog, TextInput, parseEther } from "frog";
 import { devtools } from "frog/dev";
 // import { neynar } from 'frog/hubs'
 import { handle } from "frog/next";
@@ -25,9 +26,10 @@ app.frame("/:chainId/:count", async (c) => {
   const recipientCount = Number(count);
 
   const data = await fetchPonder(count);
-  console.log(data);
 
-  // const metadata = await fetchIPFSData();
+  const metadata = await fetchIPFSData(data.metadata);
+  console.log("metadata", metadata.application.project.logoImg);
+  console.log("metadata", metadata.application.project);
 
   return c.res({
     image: (
@@ -67,12 +69,26 @@ app.frame("/:chainId/:count", async (c) => {
       </div>
     ),
     intents: [
-      <TextInput placeholder="Enter custom fruit..." />,
-      <Button value="apples">Apples</Button>,
-      <Button value="oranges">Oranges</Button>,
-      <Button value="bananas">Bananas</Button>,
+      <TextInput placeholder="Enter amount(ETH)" />,
+      <Button.Transaction target={`/donate/${data.recipientId}`}>
+        Donate
+      </Button.Transaction>,
+      <Button value="apples">Details</Button>,
       status === "response" && <Button.Reset>Reset</Button.Reset>,
     ],
+  });
+});
+
+app.transaction("/donate/:recipientId", async (c) => {
+  const { inputText } = c;
+  const recipientId = c.req.param("recipientId");
+
+  return c.contract({
+    abi: allo.abi,
+    chainId: "eip155:1",
+    functionName: "allocate",
+    to: allo.address,
+    args: [parseEther(inputText!), recipientId as `0x${string}`],
   });
 });
 
