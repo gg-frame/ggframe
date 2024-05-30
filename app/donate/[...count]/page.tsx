@@ -17,5 +17,5 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 export default function Donate({ params }: Props) {
-  return <div>donate</div>;
+  return <div>donate: {params.count}</div>;
 }
