@@ -1,7 +1,31 @@
-const url = process.env.PONDER!;
+import { allo } from "@/abis/Allo";
+import { ethers } from "ethers";
 
-if (!url) {
-  throw new Error("PONDER environment variable is required");
+let url: string;
+
+if (process.env.MODE === "dev") {
+  url = "http://localhost:42069/";
+} else if (process.env.MODE === "production") {
+  url = process.env.PONDER!;
+} else {
+  throw new Error("api url not found");
+}
+
+const provider = new ethers.JsonRpcProvider(
+  process.env.RPC_URL! || "https://arb1.arbitrum.io/rpc"
+);
+
+export async function getPool(poolId: any) {
+  const alloContract = new ethers.Contract(allo.address!, allo.abi!, provider);
+  try {
+    const pool = await alloContract.getPool(poolId);
+    // struct Pool { bytes32 profileId; IStrategy strategy; address token; Metadata metadata; bytes32 managerRole; bytes32 adminRole; }
+    // return strategy address
+    return pool[1];
+  } catch (error) {
+    console.error("Error in getPool:", error);
+    return null;
+  }
 }
 
 interface RegisteredEvent {
@@ -14,7 +38,7 @@ interface RegisteredEvent {
 }
 
 export async function fetchIPFSData(cid: string) {
-  const res = await fetch(`https://ipfs.io/ipfs/${cid}`);
+  const res = await fetch(`${process.env.IPFS_BASE_URL!}/ipfs/${cid}`);
   const data = await res.json();
   return data;
 }
