@@ -9,7 +9,8 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const count = params.count;
   const frameTags = await getFrameMetadata(
-    `https://gg-frame-three.vercel.app/api/${count}`
+    `https://gg-frame-three.vercel.app/api/donate/${count}`
+    // `http://localhost:3000/api/donate/${count}`
   );
 
   return {
