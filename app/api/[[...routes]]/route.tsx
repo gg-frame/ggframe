@@ -343,7 +343,7 @@ app.frame("/donate/:count", async (c) => {
 
     intents: [
       <TextInput placeholder="Enter amount (ETH)" />,
-      <Button.Transaction target={`/donate/${data.recipientId}`}>
+      <Button.Transaction target={`/allocate/${data.recipientId}`}>
         Donate
       </Button.Transaction>,
       <Button.Link
@@ -357,7 +357,7 @@ app.frame("/donate/:count", async (c) => {
   });
 });
 
-app.transaction("/donate/:recipientId", async (c) => {
+app.transaction("/allocate/:recipientId", async (c) => {
   const { inputText } = c;
   const recipientId = c.req.param("recipientId");
 
