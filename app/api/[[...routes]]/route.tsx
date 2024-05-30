@@ -1,12 +1,18 @@
 /** @jsxImportSource frog/jsx */
 
 import { allo } from "@/abis/Allo";
-import { fetchIPFSData, fetchPonder } from "@/hooks/useRegisteredEvent";
+import {
+  fetchIPFSData,
+  fetchPonder,
+  getPool,
+} from "@/hooks/useRegisteredEvent";
 import { Button, Frog, TextInput, parseEther } from "frog";
 import { devtools } from "frog/dev";
 // import { neynar } from 'frog/hubs'
 import { handle } from "frog/next";
 import { serveStatic } from "frog/serve-static";
+import GithubLogo from "@/public/github-mark/github-mark.png";
+import XLogo from "@/public/x-logo/logo-white.png";
 
 const app = new Frog({
   assetsPath: "/",
@@ -15,32 +21,27 @@ const app = new Frog({
   // hub: neynar({ apiKey: 'NEYNAR_FROG_FM' })
 });
 
+// TODO: check if the recipient is approved
+// TODO: get poolId, recipientCount from params
+
+const gradients = [
+  "linear-gradient(to right, #FF7E5F, #FEB47B)",
+  "linear-gradient(to right, #6A82FB, #FC5C7D)",
+  "linear-gradient(to right, #36D1DC, #5B86E5)",
+];
+
 // Uncomment to use Edge Runtime
 // export const runtime = 'edge'
-
-app.frame("/:chainId/:count", async (c) => {
-  const { buttonValue, inputText, status } = c;
-  const fruit = inputText || buttonValue;
-  const chainId = c.req.param("chainId");
-  const count = c.req.param("count");
-  const recipientCount = Number(count);
-
-  const data = await fetchPonder(count);
-
-  const metadata = await fetchIPFSData(data.metadata);
-  console.log("metadata", metadata.application.project.logoImg);
-  console.log("metadata", metadata.application.project);
+app.frame("/", async (c) => {
+  const pool = await getPool("25");
+  // TODO: get endpoint based on poolId
 
   return c.res({
     image: (
       <div
         style={{
           alignItems: "center",
-          background:
-            status === "response"
-              ? "linear-gradient(to right, #432889, #17101F)"
-              : "black",
-          backgroundSize: "100% 100%",
+          background: "black",
           display: "flex",
           flexDirection: "column",
           flexWrap: "nowrap",
@@ -48,33 +49,170 @@ app.frame("/:chainId/:count", async (c) => {
           justifyContent: "center",
           textAlign: "center",
           width: "100%",
+          fontFamily: "Inter",
+          fontWeight: 500,
+          padding: "20px",
         }}
       >
         <div
           style={{
             color: "white",
-            fontSize: 60,
+            fontSize: 100,
             fontStyle: "normal",
             letterSpacing: "-0.025em",
             lineHeight: 1.4,
-            marginTop: 30,
-            padding: "0 120px",
             whiteSpace: "pre-wrap",
           }}
         >
-          {status === "response"
-            ? `Nice choice.${fruit ? ` ${fruit.toUpperCase()}!!` : ""}`
-            : "Welcome!"}
+          Welcome to gg frame
         </div>
       </div>
     ),
+    action: "/donate",
     intents: [
-      <TextInput placeholder="Enter amount(ETH)" />,
+      <TextInput placeholder="Enter ProjectId" />,
+      <Button>💰 Donate</Button>,
+    ],
+  });
+});
+
+app.frame("/donate", async (c) => {
+  const { inputText } = c;
+
+  const data = await fetchPonder(inputText!);
+
+  const metadataCid = data.metadata;
+
+  const metadata = await fetchIPFSData(metadataCid);
+
+  if (!metadata) {
+    console.error("Failed to fetch metadata from IPFS");
+  } else {
+    console.log("Fetched metadata:", metadata);
+  }
+  const randomGradient =
+    gradients[Math.floor(Math.random() * gradients.length)];
+
+  return c.res({
+    image: (
+      <div
+        style={{
+          alignItems: "center",
+          background: metadata?.application?.project?.bannerImg
+            ? `url(${process.env.IPFS_BASE_URL}/ipfs/${metadata.application.project.bannerImg})`
+            : randomGradient,
+          backgroundSize: metadata?.application?.project?.bannerImg
+            ? "cover"
+            : "100% 100%",
+          display: "flex",
+          flexDirection: "column",
+          flexWrap: "nowrap",
+          height: "100%",
+          justifyContent: "center",
+          textAlign: "center",
+          width: "100%",
+          fontFamily: "Inter",
+          fontWeight: 500,
+          padding: "20px",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            marginBottom: 20,
+            padding: "0 120px",
+            gap: "20px",
+          }}
+        >
+          <img
+            src={`${process.env.IPFS_BASE_URL}/ipfs/${metadata.application.project.logoImg}`}
+            alt="Project Logo"
+            style={{ width: 100, height: 100, borderRadius: "50%" }}
+          />
+          <div
+            style={{
+              color: "white",
+              fontSize: 100,
+              fontStyle: "normal",
+              letterSpacing: "-0.025em",
+              lineHeight: 1.4,
+              whiteSpace: "pre-wrap",
+            }}
+          >
+            {metadata?.application?.project.title}
+          </div>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              marginBottom: 20,
+            }}
+          >
+            <img
+              src={XLogo.src}
+              alt="X Logo"
+              style={{ width: 80, height: 80, marginBottom: 10 }}
+            />
+            <div
+              style={{
+                color: "white",
+                fontSize: 40,
+                fontStyle: "normal",
+              }}
+            >
+              {metadata?.application?.project?.projectTwitter}
+            </div>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              marginBottom: 20,
+            }}
+          >
+            <img
+              src={GithubLogo.src}
+              alt="Github Logo"
+              style={{ width: 80, height: 80, marginBottom: 10 }}
+            />
+            <div
+              style={{
+                color: "white",
+                fontSize: 40,
+                fontStyle: "normal",
+              }}
+            >
+              {metadata?.application?.project?.projectGithub}
+            </div>
+          </div>
+        </div>
+      </div>
+    ),
+
+    intents: [
+      <TextInput placeholder="Enter amount (ETH)" />,
       <Button.Transaction target={`/donate/${data.recipientId}`}>
         Donate
       </Button.Transaction>,
-      <Button value="apples">Details</Button>,
-      status === "response" && <Button.Reset>Reset</Button.Reset>,
+      <Button.Link
+        href={`https://explorer.gitcoin.co/#/round/42161/25/${
+          Number(inputText) - 1
+        }`}
+      >
+        🔍 View Details
+      </Button.Link>,
     ],
   });
 });
@@ -85,7 +223,7 @@ app.transaction("/donate/:recipientId", async (c) => {
 
   return c.contract({
     abi: allo.abi,
-    chainId: "eip155:1",
+    chainId: "eip155:42161",
     functionName: "allocate",
     to: allo.address,
     args: [parseEther(inputText!), recipientId as `0x${string}`],
