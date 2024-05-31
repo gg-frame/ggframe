@@ -1,6 +1,7 @@
 import { allo } from "@/abis/Allo";
 import { StrategyABI } from "@/abis/Strategy";
 import { ethers } from "ethers";
+import { gql } from "graphql-request";
 
 let url: string;
 
@@ -44,6 +45,8 @@ export async function getStatus(
 }
 
 interface RegisteredEvent {
+  id: string;
+  pool: string;
   recipientId: string;
   recipientAddress: string;
   recipientCount: bigint;
@@ -59,8 +62,8 @@ export async function fetchIPFSData(cid: string) {
 }
 
 export async function fetchPonder(
-  recipientCount: string,
-  pool: string
+  pool: string,
+  recipientCount: string
 ): Promise<RegisteredEvent> {
   const res = await fetch(url, {
     method: "POST",
@@ -68,23 +71,33 @@ export async function fetchPonder(
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      query: `query registerd{
-				registeredEvents (orderBy: "timestamp", orderDirection: "asc", where: {recipientCount: "${recipientCount}", pool: "${pool}"}){
-					items{
-						id
-						pool
-						recipientId
-						recipientAddress
-						recipientCount
-						metadata
-						sender
-						timestamp
-					}
-				}
-			}`,
+      query: query,
+      variables: { pool, recipientCount },
     }),
   });
   const data = await res.json();
+  console.log(data);
 
   return data.data.registeredEvents.items[0];
 }
+
+const query = gql`
+  query registerd($recipientCount: String!, $pool: String!) {
+    registeredEvents(
+      orderBy: "timestamp"
+      orderDirection: "asc"
+      where: { recipientCount: $recipientCount, pool: $pool }
+    ) {
+      items {
+        id
+        pool
+        recipientId
+        recipientAddress
+        recipientCount
+        metadata
+        sender
+        timestamp
+      }
+    }
+  }
+`;
