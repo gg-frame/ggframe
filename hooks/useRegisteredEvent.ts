@@ -1,4 +1,5 @@
 import { allo } from "@/abis/Allo";
+import { StrategyABI } from "@/abis/Strategy";
 import { ethers } from "ethers";
 
 let url: string;
@@ -24,6 +25,20 @@ export async function getPool(poolId: any) {
     return pool[1];
   } catch (error) {
     console.error("Error in getPool:", error);
+    return null;
+  }
+}
+export async function getStatus(
+  poolId: `0x${string}`,
+  recipientId: `0x${string}`
+) {
+  const strategyContract = new ethers.Contract(poolId, StrategyABI, provider);
+
+  try {
+    const status = await strategyContract.getRecipientStatus(recipientId);
+    return status;
+  } catch (error) {
+    console.error("Error in getStatus:", error);
     return null;
   }
 }

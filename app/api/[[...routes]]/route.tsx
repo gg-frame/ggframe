@@ -5,6 +5,7 @@ import {
   fetchIPFSData,
   fetchPonder,
   getPool,
+  getStatus,
 } from "@/hooks/useRegisteredEvent";
 import { Button, Frog, TextInput, parseEther } from "frog";
 import { devtools } from "frog/dev";
@@ -216,6 +217,10 @@ app.frame("/donate", async (c) => {
     ],
   });
 });
+
+// TODO: get param 'donate/:poolId/:count'
+// TODO: get pool address, and validate if status is approved
+// TODO: return blank page if status is not approved, or round has ended
 app.frame("/donate/:count", async (c) => {
   const count = c.req.param("count");
 
