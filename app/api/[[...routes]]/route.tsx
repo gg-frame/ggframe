@@ -34,9 +34,6 @@ const gradients = [
 // Uncomment to use Edge Runtime
 // export const runtime = 'edge'
 app.frame("/", async (c) => {
-  const pool = await getPool("25");
-  // TODO: get endpoint based on poolId
-
   return c.res({
     image: (
       <div
@@ -69,162 +66,18 @@ app.frame("/", async (c) => {
         </div>
       </div>
     ),
-    action: `/donate`,
-    intents: [
-      <TextInput placeholder="Enter ProjectId" />,
-      <Button>💰 Donate</Button>,
-    ],
-  });
-});
-
-app.frame("/donate", async (c) => {
-  const { inputText } = c;
-
-  const data = await fetchPonder(inputText!);
-
-  const metadataCid = data.metadata;
-
-  const metadata = await fetchIPFSData(metadataCid);
-
-  if (!metadata) {
-    console.error("Failed to fetch metadata from IPFS");
-  } else {
-    console.log("Fetched metadata:", metadata);
-  }
-  const randomGradient =
-    gradients[Math.floor(Math.random() * gradients.length)];
-
-  return c.res({
-    image: (
-      <div
-        style={{
-          alignItems: "center",
-          background: metadata?.application?.project?.bannerImg
-            ? `url(${process.env.IPFS_BASE_URL}/ipfs/${metadata.application.project.bannerImg})`
-            : randomGradient,
-          backgroundSize: metadata?.application?.project?.bannerImg
-            ? "cover"
-            : "100% 100%",
-          display: "flex",
-          flexDirection: "column",
-          flexWrap: "nowrap",
-          height: "100%",
-          justifyContent: "center",
-          textAlign: "center",
-          width: "100%",
-          fontFamily: "Inter",
-          fontWeight: 500,
-          padding: "20px",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            marginBottom: 20,
-            padding: "0 120px",
-            gap: "20px",
-          }}
-        >
-          <img
-            src={`${process.env.IPFS_BASE_URL}/ipfs/${metadata.application.project.logoImg}`}
-            alt="Project Logo"
-            style={{ width: 100, height: 100, borderRadius: "50%" }}
-          />
-          <div
-            style={{
-              color: "white",
-              fontSize: 100,
-              fontStyle: "normal",
-              letterSpacing: "-0.025em",
-              lineHeight: 1.4,
-              whiteSpace: "pre-wrap",
-            }}
-          >
-            {metadata?.application?.project.title}
-          </div>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              marginBottom: 20,
-            }}
-          >
-            <img
-              src={XLogo.src}
-              alt="X Logo"
-              style={{ width: 80, height: 80, marginBottom: 10 }}
-            />
-            <div
-              style={{
-                color: "white",
-                fontSize: 40,
-                fontStyle: "normal",
-              }}
-            >
-              {metadata?.application?.project?.projectTwitter}
-            </div>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              marginBottom: 20,
-            }}
-          >
-            <img
-              src={GithubLogo.src}
-              alt="Github Logo"
-              style={{ width: 80, height: 80, marginBottom: 10 }}
-            />
-            <div
-              style={{
-                color: "white",
-                fontSize: 40,
-                fontStyle: "normal",
-              }}
-            >
-              {metadata?.application?.project?.projectGithub}
-            </div>
-          </div>
-        </div>
-      </div>
-    ),
-
-    intents: [
-      <TextInput placeholder="Enter amount (ETH)" />,
-      <Button.Transaction target={`/donate/${data.recipientId}`}>
-        Donate
-      </Button.Transaction>,
-      <Button.Link
-        href={`https://explorer.gitcoin.co/#/round/42161/25/${
-          Number(inputText) - 1
-        }`}
-      >
-        🔍 View Details
-      </Button.Link>,
-    ],
   });
 });
 
 // TODO: get param 'donate/:poolId/:count'
 // TODO: get pool address, and validate if status is approved
-// TODO: return blank page if status is not approved, or round has ended
-app.frame("/donate/:count", async (c) => {
+// TODO: return blank page if status is not approved, or round has ended(allocationEndTime from strategy contract)
+app.frame("/donate/:poolId/:count", async (c) => {
   const count = c.req.param("count");
+  const poolId = c.req.param("poolId");
+  const poolAddress = await getPool(poolId!);
 
-  const data = await fetchPonder(count as string);
+  const data = await fetchPonder(poolAddress!, count!);
 
   const metadataCid = data.metadata;
 
@@ -352,7 +205,7 @@ app.frame("/donate/:count", async (c) => {
         Donate
       </Button.Transaction>,
       <Button.Link
-        href={`https://explorer.gitcoin.co/#/round/42161/25/${
+        href={`https://explorer.gitcoin.co/#/round/42161/${poolId}/${
           Number(count) - 1
         }`}
       >
