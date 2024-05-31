@@ -59,7 +59,8 @@ export async function fetchIPFSData(cid: string) {
 }
 
 export async function fetchPonder(
-  recipientCount: string
+  recipientCount: string,
+  pool: string
 ): Promise<RegisteredEvent> {
   const res = await fetch(url, {
     method: "POST",
@@ -68,9 +69,10 @@ export async function fetchPonder(
     },
     body: JSON.stringify({
       query: `query registerd{
-				registeredEvents (orderBy :"timestamp" , orderDirection:"asc", where: {recipientCount: "${recipientCount}"} ){
+				registeredEvents (orderBy: "timestamp", orderDirection: "asc", where: {recipientCount: "${recipientCount}", pool: "${pool}"}){
 					items{
 						id
+						pool
 						recipientId
 						recipientAddress
 						recipientCount
