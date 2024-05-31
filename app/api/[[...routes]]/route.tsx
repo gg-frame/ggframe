@@ -79,6 +79,12 @@ app.frame("/donate/:poolId/:count", async (c) => {
 
   const data = await fetchPonder(poolAddress!, count!);
 
+  const status = await getStatus(
+    poolAddress!,
+    data.recipientId as `0x${string}`
+  );
+  console.log("status", status);
+
   const metadataCid = data.metadata;
 
   const metadata = await fetchIPFSData(metadataCid);
