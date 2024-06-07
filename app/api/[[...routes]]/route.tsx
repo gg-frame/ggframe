@@ -213,7 +213,7 @@ app.frame("/donate/:poolId/:count/", async (c) => {
               whiteSpace: "pre-wrap",
             }}
           >
-            This recipient is not approved
+            This project is not approved
           </div>
         </div>
       ),
