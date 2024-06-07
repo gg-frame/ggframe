@@ -44,6 +44,16 @@ then, frame will be automatically created, and just cast it!
 
 <img width="354" alt="Screenshot 2024-06-07 at 21 27 58" src="https://github.com/tnkshuuhei/gg-frame/assets/67859510/d6f4c3a1-191d-4ae3-9f06-81a2f837431e">
 
+### Error happens when...
+
+Pool is not active
+
+<img width="610" alt="Screenshot 2024-06-07 at 22 23 55" src="https://github.com/tnkshuuhei/gg-frame/assets/67859510/9d240b4c-0ea3-4a7a-84c3-029177c258aa">
+
+Project is not approved
+
+<img width="611" alt="Screenshot 2024-06-07 at 22 23 37" src="https://github.com/tnkshuuhei/gg-frame/assets/67859510/032460eb-580d-480b-b4c6-0efa63403723">
+
 ## for builders
 
 ```
