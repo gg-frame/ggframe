@@ -10,9 +10,9 @@ GG frame is a Farcaster Frame built to make it easier for users to donate to the
 [0x1133eA7Af70876e64665ecD07C0A0476d09465a1](https://arbiscan.io/address/0x1133eA7Af70876e64665ecD07C0A0476d09465a1)
 
 ### Supported Strategy Contract
-[0xE03a19f4921D69cddD37f54dFe814DC66AA92100](https://arbiscan.io/address/0xE03a19f4921D69cddD37f54dFe814DC66AA92100)
+[poolId 25: 0xE03a19f4921D69cddD37f54dFe814DC66AA92100](https://arbiscan.io/address/0xE03a19f4921D69cddD37f54dFe814DC66AA92100)
 
-[0xDA3B55A9bCf58Bb2d9F673836Beab3aE47cA9184](https://arbiscan.io/address/0xDA3B55A9bCf58Bb2d9F673836Beab3aE47cA9184)
+[poolId 26: 0xDA3B55A9bCf58Bb2d9F673836Beab3aE47cA9184](https://arbiscan.io/address/0xDA3B55A9bCf58Bb2d9F673836Beab3aE47cA9184)
 
 [View Config on Indexer](https://github.com/tnkshuuhei/gg-frame-ponder/blob/main/ponder.config.ts)
 
