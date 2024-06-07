@@ -4,6 +4,7 @@
 GG frame is a Farcaster Frame built to make it easier for users to donate to the Gitcoin Grant.
 
 ## Resources
+- [Deployed Link](https://gg-frame-three.vercel.app)
 - [Frame implementation built with frog](https://github.com/tnkshuuhei/gg-frame)
 - [Indexer built with ponder](https://github.com/tnkshuuhei/gg-frame-ponder)
 - **And follow me** on [Warpcast](https://warpcast.com/shutanaka.eth) and [X(Prev Twitter)](https://x.com/shutanaka_jp)
