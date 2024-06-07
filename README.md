@@ -1,47 +1,40 @@
 # GG Frame
-
 <img width="601" alt="Screenshot 2024-06-07 at 21 34 55" src="https://github.com/tnkshuuhei/gg-frame/assets/67859510/1ef11362-daea-4781-90a2-dd54e2315d0d">
 
 ## What is GG frame?
-
 GG frame is a Farcaster Frame built to make it easier for users to donate to the Gitcoin Grant.
 
 ## Contracts
 
 ### Allo V2 Contract Address on Arbitrum
-
-<a target="_blank" rel="noreferrer" href="https://arbiscan.io/address/0x1133eA7Af70876e64665ecD07C0A0476d09465a1">0x1133eA7Af70876e64665ecD07C0A0476d09465a1</a>
+[0x1133eA7Af70876e64665ecD07C0A0476d09465a1](https://arbiscan.io/address/0x1133eA7Af70876e64665ecD07C0A0476d09465a1)
 
 ### Supported Strategy Contract
+[0xE03a19f4921D69cddD37f54dFe814DC66AA92100](https://arbiscan.io/address/0xE03a19f4921D69cddD37f54dFe814DC66AA92100)
 
-<a target="_blank" rel="noreferrer" href="https://arbiscan.io/address/0xE03a19f4921D69cddD37f54dFe814DC66AA92100">0xE03a19f4921D69cddD37f54dFe814DC66AA92100</a>
+[0xDA3B55A9bCf58Bb2d9F673836Beab3aE47cA9184](https://arbiscan.io/address/0xDA3B55A9bCf58Bb2d9F673836Beab3aE47cA9184)
 
-<a target="_blank" rel="noreferrer" href="https://arbiscan.io/address/0xDA3B55A9bCf58Bb2d9F673836Beab3aE47cA9184">0xDA3B55A9bCf58Bb2d9F673836Beab3aE47cA9184</a>
-
-<a target="_blank" rel="noreferrer" href="https://github.com/tnkshuuhei/gg-frame-ponder/blob/main/ponder.config.ts">View Config on Indexer</a>
+[View Config on Indexer](https://github.com/tnkshuuhei/gg-frame-ponder/blob/main/ponder.config.ts)
 
 ## Resources
-
-- <a target="_blank" rel="noreferrer" href="https://gg-frame-three.vercel.app">Deployed Link</a>
-- <a target="_blank" rel="noreferrer" href="https://github.com/tnkshuuhei/gg-frame">Frame implementation built with frog</a>
-- <a target="_blank" rel="noreferrer" href="https://github.com/tnkshuuhei/gg-frame-ponder">Indexer built with ponder</a>
-- **And follow shutanaka.eth** on <span><a target="_blank" rel="noreferrer" href="https://warpcast.com/shutanaka.eth">Warpcast</a></span> and <span><a target="_blank" rel="noreferrer" href="https://x.com/shutanaka_jp">X(Prev Twitter)</a></span>
+- [Deployed Link](https://gg-frame-three.vercel.app)
+- [Frame implementation built with frog](https://github.com/tnkshuuhei/gg-frame)
+- [Indexer built with ponder](https://github.com/tnkshuuhei/gg-frame-ponder)
+- **And follow me** on [Warpcast](https://warpcast.com/shutanaka.eth) and [X(Prev Twitter)](https://x.com/shutanaka_jp)
 
 ## How to use GG frame?
 
 ### 1. Go to Gitcoin Grant Explore
-
-From <a target="_blank" rel="noreferrer" href="https://explore.gitcoin.co/">Gitcoin Grant Explorer</a>, open the project page you want to encourage users to support.
+From the [Gitcoin Grant Explorer](https://explorer.gitcoin.co/), open the project page you want to encourage users to support.
 
 Copy the two numbers after `https://explorer.gitcoin.co/#/round/42161/`. In this case it is `/25/156`
 
 **Note:** The Gitcoin Grant is currently hosted on Arbitrum mainnet (chainId: 42161) and the GG frame only supports Arbitrum mainnet at this time.
-
+   
 ![Screenshot 2024-06-07 at 21 01 44](https://github.com/tnkshuuhei/gg-frame/assets/67859510/572a42b3-17ca-4da8-8c1f-11caad5d45a6)
 
-### 2. Go to Warpcast
-
-Open <a target="_blank" rel="noreferrer" href="https://warpcast.com">warpcast</a>, and then paste the link with the numbers you copied before like below
+### 2. Go to [Warpcast](https://warpcast.com/) 
+Open warpcast, and then paste the link with the numbers you copied before like below
 
 `https://gg-frame-three.vercel.app/donate/25/156`
 
