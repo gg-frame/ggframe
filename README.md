@@ -36,7 +36,7 @@ Copy the two numbers after `https://explorer.gitcoin.co/#/round/42161/`. In this
 ### 2. Go to [Warpcast](https://warpcast.com/) 
 Open warpcast, and then paste the link with the numbers you copied before like below
 
-`https://gg-frame-three.vercel.app/donate/25/156`
+`https://gg-frame-three.vercel.app/api/donate/25/156`
 
 then, frame will be automatically created, and just cast it!
 
