@@ -79,8 +79,44 @@ app.frame("/", async (c) => {
         >
           Welcome to GG frame!
         </div>
+        <div
+          style={{
+            color: "white",
+            fontSize: 40,
+            fontStyle: "normal",
+            letterSpacing: "-0.025em",
+            lineHeight: 1.4,
+            whiteSpace: "pre-wrap",
+          }}
+        >
+          GG frame is a easiest way to donate to Gitcoin Grants.
+        </div>
+        <div
+          style={{
+            color: "white",
+            fontSize: 50,
+            fontStyle: "normal",
+            letterSpacing: "-0.025em",
+            lineHeight: 1.4,
+            whiteSpace: "pre-wrap",
+            marginTop: 20,
+          }}
+        >
+          👇See more details on Github👇
+        </div>
       </div>
     ),
+    intents: [
+      <Button.Link href="https://github.com/tnkshuuhei/gg-frame">
+        Github 🔧
+      </Button.Link>,
+      <Button.Link href="https://warpcast.com/shutanaka.eth">
+        follow me ❤️
+      </Button.Link>,
+      <Button.Link href="https://explorer.gitcoin.co/">
+        Explore GG 🔍
+      </Button.Link>,
+    ],
   });
 });
 
