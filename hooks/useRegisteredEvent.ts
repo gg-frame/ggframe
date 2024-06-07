@@ -44,6 +44,17 @@ export async function getStatus(
   }
 }
 
+export async function getIsPoolActive(poolId: `0x${string}`) {
+  const strategyContract = new ethers.Contract(poolId, StrategyABI, provider);
+  try {
+    const status = await strategyContract.isPoolActive();
+    return status;
+  } catch (error) {
+    console.error("Error in getIsPoolActive:", error);
+    return null;
+  }
+}
+
 interface RegisteredEvent {
   id: string;
   pool: string;

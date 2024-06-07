@@ -4,6 +4,7 @@ import { allo } from "@/abis/Allo";
 import {
   fetchIPFSData,
   fetchPonder,
+  getIsPoolActive,
   getPool,
   getStatus,
 } from "@/hooks/useRegisteredEvent";
@@ -14,6 +15,10 @@ import { handle } from "frog/next";
 import { serveStatic } from "frog/serve-static";
 import GithubLogo from "@/public/github-mark/github-mark.png";
 import XLogo from "@/public/x-logo/logo-white.png";
+
+if (!process.env.IPFS_BASE_URL) {
+  throw new Error("IPFS_BASE_URL is not defined");
+}
 
 const app = new Frog({
   assetsPath: "/",
@@ -34,9 +39,6 @@ const app = new Frog({
     ],
   },
 });
-
-// TODO: check if the recipient is approved
-// TODO: get poolId, recipientCount from params
 
 const gradients = [
   "linear-gradient(to right, #FF7E5F, #FEB47B)",
@@ -82,9 +84,6 @@ app.frame("/", async (c) => {
   });
 });
 
-// TODO: get param 'donate/:poolId/:count'
-// TODO: get pool address, and validate if status is approved
-// TODO: return blank page if status is not approved, or round has ended(allocationEndTime from strategy contract)
 app.frame("/donate/:poolId/:count", async (c) => {
   const count = c.req.param("count");
   const poolId = c.req.param("poolId");
@@ -96,7 +95,80 @@ app.frame("/donate/:poolId/:count", async (c) => {
     poolAddress!,
     data.recipientId as `0x${string}`
   );
-  console.log("status", status);
+
+  const isActivePool = await getIsPoolActive(poolAddress!);
+
+  if (!isActivePool) {
+    return c.res({
+      image: (
+        <div
+          style={{
+            alignItems: "center",
+            background: "red",
+            display: "flex",
+            flexDirection: "column",
+            flexWrap: "nowrap",
+            height: "100%",
+            justifyContent: "center",
+            textAlign: "center",
+            width: "100%",
+            fontFamily: "Open Sans",
+            fontWeight: 500,
+            padding: "20px",
+          }}
+        >
+          <div
+            style={{
+              color: "white",
+              fontSize: 100,
+              fontStyle: "normal",
+              letterSpacing: "-0.025em",
+              lineHeight: 1.4,
+              whiteSpace: "pre-wrap",
+            }}
+          >
+            This round is not active
+          </div>
+        </div>
+      ),
+    });
+  }
+
+  if (status !== BigInt(2)) {
+    return c.res({
+      image: (
+        <div
+          style={{
+            alignItems: "center",
+            background: "red",
+            display: "flex",
+            flexDirection: "column",
+            flexWrap: "nowrap",
+            height: "100%",
+            justifyContent: "center",
+            textAlign: "center",
+            width: "100%",
+            fontFamily: "Open Sans",
+            fontWeight: 500,
+            padding: "20px",
+          }}
+        >
+          <div
+            style={{
+              color: "white",
+              fontSize: 100,
+              fontStyle: "normal",
+              letterSpacing: "-0.025em",
+              lineHeight: 1.4,
+              whiteSpace: "pre-wrap",
+            }}
+          >
+            This recipient is not approved
+          </div>
+        </div>
+      ),
+    });
+  }
 
   const metadataCid = data.metadata;
 
