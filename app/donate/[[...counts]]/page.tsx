@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       : process.env.VERCEL_URL!;
 
   const frameTags = await getFrameMetadata(
-    `${baseUrl}/api/donate/${poolId}/${count}`
+    `${baseUrl}/api/donate/${poolId}/${count}/`
     // `http://localhost:3000/api/donate/${count}`
   );
 

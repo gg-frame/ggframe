@@ -120,12 +120,14 @@ app.frame("/", async (c) => {
   });
 });
 
-app.frame("/donate/:poolId/:count", async (c) => {
+app.frame("/donate/:poolId/:count/", async (c) => {
   const count = c.req.param("count");
   const poolId = c.req.param("poolId");
   const poolAddress = await getPool(poolId!);
 
-  const data = await fetchPonder(poolAddress!, count!);
+  const fixedCount = Number(count) + 1;
+
+  const data = await fetchPonder(poolAddress!, fixedCount.toString());
 
   const status = await getStatus(
     poolAddress!,
@@ -133,6 +135,18 @@ app.frame("/donate/:poolId/:count", async (c) => {
   );
 
   const isActivePool = await getIsPoolActive(poolAddress!);
+
+  const metadataCid = data.metadata;
+
+  const metadata = await fetchIPFSData(metadataCid);
+
+  if (!metadata) {
+    console.error("Failed to fetch metadata from IPFS");
+  } else {
+    console.log("Fetched metadata:", metadata);
+  }
+  const randomGradient =
+    gradients[Math.floor(Math.random() * gradients.length)];
 
   if (!isActivePool) {
     return c.res({
@@ -205,18 +219,6 @@ app.frame("/donate/:poolId/:count", async (c) => {
       ),
     });
   }
-
-  const metadataCid = data.metadata;
-
-  const metadata = await fetchIPFSData(metadataCid);
-
-  if (!metadata) {
-    console.error("Failed to fetch metadata from IPFS");
-  } else {
-    console.log("Fetched metadata:", metadata);
-  }
-  const randomGradient =
-    gradients[Math.floor(Math.random() * gradients.length)];
 
   return c.res({
     image: (
@@ -328,9 +330,7 @@ app.frame("/donate/:poolId/:count", async (c) => {
         Donate
       </Button.Transaction>,
       <Button.Link
-        href={`https://explorer.gitcoin.co/#/round/42161/${poolId}/${
-          Number(count) - 1
-        }`}
+        href={`https://explorer.gitcoin.co/#/round/42161/${poolId}/${count}`}
       >
         🔍 View Details
       </Button.Link>,
