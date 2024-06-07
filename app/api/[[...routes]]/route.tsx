@@ -20,6 +20,19 @@ const app = new Frog({
   basePath: "/api",
   // Supply a Hub to enable frame verification.
   // hub: neynar({ apiKey: 'NEYNAR_FROG_FM' })
+  imageOptions: {
+    fonts: [
+      {
+        name: "Open Sans",
+        weight: 700,
+        source: "google",
+      },
+      {
+        name: "Madimi One",
+        source: "google",
+      },
+    ],
+  },
 });
 
 // TODO: check if the recipient is approved
@@ -39,7 +52,7 @@ app.frame("/", async (c) => {
       <div
         style={{
           alignItems: "center",
-          background: "black",
+          background: "linear-gradient(to right, #36D1DC, #5B86E5)",
           display: "flex",
           flexDirection: "column",
           flexWrap: "nowrap",
@@ -47,7 +60,7 @@ app.frame("/", async (c) => {
           justifyContent: "center",
           textAlign: "center",
           width: "100%",
-          fontFamily: "Inter",
+          fontFamily: "Open Sans",
           fontWeight: 500,
           padding: "20px",
         }}
@@ -62,7 +75,7 @@ app.frame("/", async (c) => {
             whiteSpace: "pre-wrap",
           }}
         >
-          Welcome to gg frame
+          Welcome to GG frame!
         </div>
       </div>
     ),
@@ -102,12 +115,8 @@ app.frame("/donate/:poolId/:count", async (c) => {
       <div
         style={{
           alignItems: "center",
-          background: metadata?.application?.project?.bannerImg
-            ? `url(${process.env.IPFS_BASE_URL}/ipfs/${metadata.application.project.bannerImg})`
-            : randomGradient,
-          backgroundSize: metadata?.application?.project?.bannerImg
-            ? "cover"
-            : "100% 100%",
+          background: randomGradient,
+          backgroundSize: "100% 100%",
           display: "flex",
           flexDirection: "column",
           flexWrap: "nowrap",
@@ -115,7 +124,7 @@ app.frame("/donate/:poolId/:count", async (c) => {
           justifyContent: "center",
           textAlign: "center",
           width: "100%",
-          fontFamily: "Inter",
+          fontFamily: "Open Sans",
           fontWeight: 500,
           padding: "20px",
         }}
@@ -138,7 +147,7 @@ app.frame("/donate/:poolId/:count", async (c) => {
           <div
             style={{
               color: "white",
-              fontSize: 100,
+              fontSize: 70,
               fontStyle: "normal",
               letterSpacing: "-0.025em",
               lineHeight: 1.4,
