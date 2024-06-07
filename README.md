@@ -1,7 +1,10 @@
 # GG Frame
+<img width="601" alt="Screenshot 2024-06-07 at 21 34 55" src="https://github.com/tnkshuuhei/gg-frame/assets/67859510/1ef11362-daea-4781-90a2-dd54e2315d0d">
 
 ## What is GG frame?
 GG frame is a Farcaster Frame built to make it easier for users to donate to the Gitcoin Grant.
+
+[Allo V2 Contract Address on Arbitrum](https://arbiscan.io/address/0x1133eA7Af70876e64665ecD07C0A0476d09465a1)
 
 ## Resources
 - [Deployed Link](https://gg-frame-three.vercel.app)
@@ -27,7 +30,9 @@ Open warpcast, and then paste the link with the numbers you copied before like b
 
 then, frame will be automatically created, and just cast it!
 
-That's all!
+<img width="590" alt="Screenshot 2024-06-07 at 21 27 31" src="https://github.com/tnkshuuhei/gg-frame/assets/67859510/c7bccf18-136e-423f-b12a-618062e06f85">
+
+<img width="354" alt="Screenshot 2024-06-07 at 21 27 58" src="https://github.com/tnkshuuhei/gg-frame/assets/67859510/d6f4c3a1-191d-4ae3-9f06-81a2f837431e">
 
 ## for builders
 
