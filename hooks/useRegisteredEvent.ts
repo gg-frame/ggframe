@@ -98,7 +98,7 @@ export async function fetchGrant(
   projectId: string
 ) {
   const res = await fetch(
-    "https://grants-stack-indexer-v2.gitcoin.co/graphiql",
+    "https://grants-stack-indexer-v2.gitcoin.co/graphql",
     {
       method: "POST",
       headers: {
@@ -137,7 +137,7 @@ const query = gql`
 
 const queryGrant = gql`
   query MyQuery($chainId: Int!, $roundId: String!, $projectId: String!) {
-    rounds(where: { chainId: $chainId, id: $roundId }) {
+    rounds(condition: { chainId: $chainId, id: $roundId }) {
       id
       chainId
       applications(filter: { id: { equalTo: $projectId } }) {
