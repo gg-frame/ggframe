@@ -92,6 +92,28 @@ export async function fetchPonder(
   return data.data.registeredEvents.items[0];
 }
 
+export async function fetchGrant(
+  chainId: number,
+  roundId: string,
+  projectId: string
+) {
+  const res = await fetch(
+    "https://grants-stack-indexer-v2.gitcoin.co/graphiql",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        query: queryGrant,
+        variables: { chainId, roundId, projectId },
+      }),
+    }
+  );
+  const data = await res.json();
+  return data;
+}
+
 const query = gql`
   query registerd($recipientCount: String!, $pool: String!) {
     registeredEvents(
@@ -109,6 +131,28 @@ const query = gql`
         sender
         timestamp
       }
+    }
+  }
+`;
+
+const queryGrant = gql`
+  query MyQuery($chainId: Int!, $roundId: String!, $projectId: String!) {
+    rounds(where: { chainId: $chainId, id: $roundId }) {
+      id
+      chainId
+      applications(filter: { id: { equalTo: $projectId } }) {
+        project {
+          name
+          metadata
+        }
+        id
+        status
+        projectId
+        totalAmountDonatedInUsd
+        totalDonationsCount
+        uniqueDonorsCount
+      }
+      strategyName
     }
   }
 `;
