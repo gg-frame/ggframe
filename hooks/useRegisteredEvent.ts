@@ -59,6 +59,7 @@ const queryGrant = gql`
         totalAmountDonatedInUsd
         totalDonationsCount
         uniqueDonorsCount
+        anchorAddress
       }
       strategyName
       donationsStartTime
