@@ -119,18 +119,22 @@ app.frame("/donate/:chainId/:poolId/:count/", async (c) => {
   const count = c.req.param("count");
   const poolId = c.req.param("poolId");
 
+  // TODO: Add strategy Type validation
+
   const data = await fetchGrant(Number(chainId), poolId!, count);
-  const roundData = data.data?.rounds[0].applications[0];
 
-  const status = roundData?.status;
+  const applicationData = data.data?.rounds[0].applications[0];
+  const roundData = data.data?.rounds[0];
 
-  const metadata = roundData?.project.metadata;
+  const status = applicationData?.status;
+
+  const metadata = applicationData?.project.metadata;
 
   const randomGradient =
     gradients[Math.floor(Math.random() * gradients.length)];
 
-  const start = new Date(data.data.rounds[0].donationsStartTime);
-  const end = new Date(data.data.rounds[0].donationsEndTime);
+  const start = new Date(roundData.donationsStartTime);
+  const end = new Date(roundData.donationsEndTime);
   const now = new Date();
 
   const isActivePool = now >= start && now <= end;
@@ -313,7 +317,9 @@ app.frame("/donate/:chainId/:poolId/:count/", async (c) => {
 
     intents: [
       <TextInput placeholder="Enter amount (ETH)" />,
-      <Button.Transaction target={`/allocate/${roundData?.anchoreAddress}`}>
+      <Button.Transaction
+        target={`/allocate/${applicationData?.anchoreAddress}`}
+      >
         Donate
       </Button.Transaction>,
       <Button.Link
