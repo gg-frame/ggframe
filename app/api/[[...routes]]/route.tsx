@@ -262,52 +262,54 @@ app.frame("/donate/:chainId/:poolId/:count/", async (c) => {
             alignItems: "center",
           }}
         >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              marginBottom: 20,
-            }}
-          >
-            <img
-              src={XLogo.src}
-              alt="X Logo"
-              style={{ width: 80, height: 80, marginBottom: 10 }}
-            />
+          {metadata?.projectTwitter && (
             <div
               style={{
-                color: "white",
-                fontSize: 40,
-                fontStyle: "normal",
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                marginBottom: 20,
               }}
             >
-              {metadata?.projectTwitter}
+              <img
+                src={XLogo.src}
+                alt="X Logo"
+                style={{ width: 40, height: 40, marginRight: 10 }}
+              />
+              <div
+                style={{
+                  color: "white",
+                  fontSize: 40,
+                }}
+              >
+                {metadata?.projectTwitter}
+              </div>
             </div>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              marginBottom: 20,
-            }}
-          >
-            <img
-              src={GithubLogo.src}
-              alt="Github Logo"
-              style={{ width: 80, height: 80, marginBottom: 10 }}
-            />
+          )}
+          {metadata?.projectGithub && (
             <div
               style={{
-                color: "white",
-                fontSize: 40,
-                fontStyle: "normal",
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                marginBottom: 20,
               }}
             >
-              {metadata?.projectGithub}
+              <img
+                src={GithubLogo.src}
+                alt="Github Logo"
+                style={{ width: 40, height: 40, marginRight: 10 }}
+              />
+              <div
+                style={{
+                  color: "white",
+                  fontSize: 40,
+                }}
+              >
+                {metadata?.projectGithub}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     ),
@@ -320,7 +322,7 @@ app.frame("/donate/:chainId/:poolId/:count/", async (c) => {
         Donate
       </Button.Transaction>,
       <Button.Link
-        href={`https://explorer.gitcoin.co/#/round/42161/${poolId}/${count}`}
+        href={`https://explorer.gitcoin.co/#/round/${chainId}/${poolId}/${count}`}
       >
         🔍 View Details
       </Button.Link>,
