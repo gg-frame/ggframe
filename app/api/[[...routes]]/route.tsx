@@ -207,7 +207,7 @@ app.frame("/donate/:chainId/:poolId/:count/", async (c) => {
       ),
     });
   }
-  // TODO: Display donated amount, donation counts
+
   return c.res({
     image: (
       <div
@@ -310,6 +310,23 @@ app.frame("/donate/:chainId/:poolId/:count/", async (c) => {
               </div>
             </div>
           )}
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              marginBottom: 20,
+            }}
+          >
+            <div
+              style={{
+                color: "white",
+                fontSize: 50,
+              }}
+            >
+              {`$${applicationData?.totalAmountDonatedInUsd} donations from ${applicationData?.uniqueDonorsCount} donors`}
+            </div>
+          </div>
         </div>
       </div>
     ),
