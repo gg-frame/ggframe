@@ -9,17 +9,9 @@ GG frame is a Farcaster Frame built to make it easier for users to donate to the
 ### Allo V2 Contract Address on Arbitrum
 [0x1133eA7Af70876e64665ecD07C0A0476d09465a1](https://arbiscan.io/address/0x1133eA7Af70876e64665ecD07C0A0476d09465a1)
 
-### Supported Strategy Contract
-[poolId 25: 0xE03a19f4921D69cddD37f54dFe814DC66AA92100](https://arbiscan.io/address/0xE03a19f4921D69cddD37f54dFe814DC66AA92100)
-
-[poolId 26: 0xDA3B55A9bCf58Bb2d9F673836Beab3aE47cA9184](https://arbiscan.io/address/0xDA3B55A9bCf58Bb2d9F673836Beab3aE47cA9184)
-
-[View Config on Indexer](https://github.com/tnkshuuhei/gg-frame-ponder/blob/main/ponder.config.ts)
-
 ## Resources
 - [Deployed Link](https://gg-frame-three.vercel.app)
 - [Frame implementation built with frog](https://github.com/tnkshuuhei/gg-frame)
-- [Indexer built with ponder](https://github.com/tnkshuuhei/gg-frame-ponder)
 - **And follow me** on [Warpcast](https://warpcast.com/shutanaka.eth) and [X(Prev Twitter)](https://x.com/shutanaka_jp)
 
 ## How to use GG frame?
@@ -27,7 +19,7 @@ GG frame is a Farcaster Frame built to make it easier for users to donate to the
 ### 1. Go to Gitcoin Grant Explore
 From the [Gitcoin Grant Explorer](https://explorer.gitcoin.co/), open the project page you want to encourage users to support.
 
-Copy the two numbers after `https://explorer.gitcoin.co/#/round/42161/`. In this case it is `/25/156`
+Copy the two numbers after `https://explorer.gitcoin.co/#/round/`. In this case it is `/42161//25/156`
 
 **Note:** The Gitcoin Grant is currently hosted on Arbitrum mainnet (chainId: 42161) and the GG frame only supports Arbitrum mainnet at this time.
    
@@ -36,7 +28,7 @@ Copy the two numbers after `https://explorer.gitcoin.co/#/round/42161/`. In this
 ### 2. Go to [Warpcast](https://warpcast.com/) 
 Open warpcast, and then paste the link with the numbers you copied before like below
 
-`https://gg-frame-three.vercel.app/api/donate/25/156`
+`https://gg-frame-three.vercel.app/api/donate/42161//25/156`
 
 then, frame will be automatically created, and just cast it!
 
