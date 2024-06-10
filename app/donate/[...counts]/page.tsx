@@ -13,8 +13,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       : process.env.VERCEL_URL!;
 
   const frameTags = await getFrameMetadata(
-    `${baseUrl}/api/donate/${chainId}/${poolId}/${count}/`
-    // `http://localhost:3000/api/donate/${count}`
+    `https://gg-frame-three.vercel.app/api/donate/${chainId}/${poolId}/${count}`
   );
 
   return {
@@ -26,7 +25,7 @@ export default function Donate({ params }: Props) {
 
   return (
     <div>
-      donate to poolId: {poolId}, recipientCount: {count}
+      donate to chainId : {chainId}, poolId: {poolId}, recipientCount: {count}
     </div>
   );
 }
