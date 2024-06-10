@@ -1,11 +1,7 @@
 /** @jsxImportSource frog/jsx */
 
 import { allo } from "@/abis/Allo";
-import {
-  fetchGrant,
-  getIsPoolActive,
-  getPool,
-} from "@/hooks/useRegisteredEvent";
+import { fetchGrant } from "@/hooks/useRegisteredEvent";
 import { Button, Frog, TextInput, parseEther } from "frog";
 import { devtools } from "frog/dev";
 // import { neynar } from 'frog/hubs'
@@ -123,20 +119,22 @@ app.frame("/donate/:chainId/:poolId/:count/", async (c) => {
   const count = c.req.param("count");
   const poolId = c.req.param("poolId");
 
-  const poolAddress = await getPool(poolId!);
-
   const data = await fetchGrant(Number(chainId), poolId!, count);
   const roundData = data.data?.rounds[0].applications[0];
 
   const status = roundData?.status;
-  const isActivePool = await getIsPoolActive(poolAddress!);
 
   const metadata = roundData?.project.metadata;
 
   const randomGradient =
     gradients[Math.floor(Math.random() * gradients.length)];
 
-  // TODO: Fix: check based on donationsEndTime
+  const start = new Date(data.data.rounds[0].donationsStartTime);
+  const end = new Date(data.data.rounds[0].donationsEndTime);
+  const now = new Date();
+
+  const isActivePool = now >= start && now <= end;
+
   if (!isActivePool) {
     return c.res({
       image: (
