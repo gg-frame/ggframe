@@ -447,7 +447,7 @@ app.frame("/donate/:chainId/:poolId/:count/", async (c) => {
     intents: [
       <TextInput placeholder="Enter amount (ETH)" />,
       <Button.Transaction
-        target={`/allocate/${chainId}/${applicationData?.anchoreAddress}`}
+        target={`/allocate/${chainId}/${applicationData?.anchorAddress}`}
       >
         Donate
       </Button.Transaction>,
