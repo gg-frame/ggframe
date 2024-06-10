@@ -9,6 +9,7 @@ import { handle } from "frog/next";
 import { serveStatic } from "frog/serve-static";
 import GithubLogo from "@/public/github-mark/github-mark.png";
 import XLogo from "@/public/x-logo/logo-white.png";
+import { ethers } from "ethers";
 
 if (!process.env.IPFS_BASE_URL) {
   throw new Error("IPFS_BASE_URL is not defined");
@@ -737,7 +738,7 @@ app.frame("/donate/:chainId/:poolId/:count/", async (c) => {
     intents: [
       <TextInput placeholder="Enter amount (ETH)" />,
       <Button.Transaction
-        target={`/allocate/${chainId}/${applicationData?.anchorAddress}`}
+        target={`/allocate/${chainId}/${poolId}/${applicationData?.anchorAddress}`}
       >
         Donate
       </Button.Transaction>,
@@ -750,19 +751,44 @@ app.frame("/donate/:chainId/:poolId/:count/", async (c) => {
   });
 });
 
-app.transaction("/allocate/:chainId/:recipientId", async (c) => {
+app.transaction("/allocate/:chainId/:poolId/:recipientId", async (c) => {
   const { inputText } = c;
   const chainId = c.req.param("chainId");
   const recipientId = c.req.param("recipientId");
+  const poolId = c.req.param("poolId");
 
   const chain = getChainId(chainId);
+  const NATIVE = "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE".toLowerCase();
+  const permitType = 0; // None
+  const encoder = new ethers.AbiCoder();
+
+  const data = encoder.encode(
+    [
+      "address",
+      "uint8", // PermitType permitType enum
+      "tuple(tuple(tuple(address, uint256), uint256, uint256), string)",
+    ],
+    [
+      recipientId, // recipientId as address
+      permitType, // PermitType permitType enum
+      // Permit2Data memory p2Data below
+      [
+        [
+          [NATIVE, parseEther(inputText!)], // token, amount
+          0, // nonce
+          Math.floor(new Date().getTime() / 1000) + 1000, // deadline
+        ],
+        "", // signature, Native doesn't need signature
+      ],
+    ]
+  );
   return c.contract({
     abi: allo.abi,
     chainId: chain,
     functionName: "allocate",
     to: allo.address,
-    //TODO: fix allocate func args
-    args: [parseEther(inputText!), recipientId as `0x${string}`],
+    args: [BigInt(poolId), data as `0x${string}`],
+    value: parseEther(inputText!),
   });
 });
 
