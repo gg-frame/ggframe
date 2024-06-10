@@ -153,6 +153,7 @@ const queryGrant = gql`
         uniqueDonorsCount
       }
       strategyName
+      donationsEndTime
     }
   }
 `;

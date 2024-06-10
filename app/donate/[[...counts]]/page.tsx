@@ -6,14 +6,14 @@ interface Props {
   params: { counts: string[] };
 }
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const [poolId, count] = params.counts;
+  const [chainId, poolId, count] = params.counts;
   const baseUrl =
     process.env.MODE === "dev"
       ? "http://localhost:3000"
       : process.env.VERCEL_URL!;
 
   const frameTags = await getFrameMetadata(
-    `${baseUrl}/api/donate/${poolId}/${count}/`
+    `${baseUrl}/api/donate/${chainId}/${poolId}/${count}/`
     // `http://localhost:3000/api/donate/${count}`
   );
 
@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 export default function Donate({ params }: Props) {
-  const [poolId, count] = params.counts;
+  const [chainId, poolId, count] = params.counts;
 
   return (
     <div>

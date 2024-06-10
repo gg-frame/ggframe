@@ -2,11 +2,9 @@
 
 import { allo } from "@/abis/Allo";
 import {
-  fetchIPFSData,
-  fetchPonder,
+  fetchGrant,
   getIsPoolActive,
   getPool,
-  getStatus,
 } from "@/hooks/useRegisteredEvent";
 import { Button, Frog, TextInput, parseEther } from "frog";
 import { devtools } from "frog/dev";
@@ -120,34 +118,25 @@ app.frame("/", async (c) => {
   });
 });
 
-app.frame("/donate/:poolId/:count/", async (c) => {
+app.frame("/donate/:chainId/:poolId/:count/", async (c) => {
+  const chainId = c.req.param("chainId");
   const count = c.req.param("count");
   const poolId = c.req.param("poolId");
+
   const poolAddress = await getPool(poolId!);
 
-  const fixedCount = Number(count) + 1;
+  const data = await fetchGrant(Number(chainId), poolId!, count);
+  const roundData = data.data?.rounds[0].applications[0];
 
-  const data = await fetchPonder(poolAddress!, fixedCount.toString());
-
-  const status = await getStatus(
-    poolAddress!,
-    data.recipientId as `0x${string}`
-  );
-
+  const status = roundData?.status;
   const isActivePool = await getIsPoolActive(poolAddress!);
 
-  const metadataCid = data.metadata;
+  const metadata = roundData?.project.metadata;
 
-  const metadata = await fetchIPFSData(metadataCid);
-
-  if (!metadata) {
-    console.error("Failed to fetch metadata from IPFS");
-  } else {
-    console.log("Fetched metadata:", metadata);
-  }
   const randomGradient =
     gradients[Math.floor(Math.random() * gradients.length)];
 
+  // TODO: Fix: check based on donationsEndTime
   if (!isActivePool) {
     return c.res({
       image: (
@@ -184,7 +173,7 @@ app.frame("/donate/:poolId/:count/", async (c) => {
     });
   }
 
-  if (status !== BigInt(2)) {
+  if (status !== "APPROVED") {
     return c.res({
       image: (
         <div
@@ -219,7 +208,7 @@ app.frame("/donate/:poolId/:count/", async (c) => {
       ),
     });
   }
-
+  // TODO: Display donated amount, donation counts
   return c.res({
     image: (
       <div
@@ -250,7 +239,7 @@ app.frame("/donate/:poolId/:count/", async (c) => {
           }}
         >
           <img
-            src={`${process.env.IPFS_BASE_URL}/ipfs/${metadata.application.project.logoImg}`}
+            src={`${process.env.IPFS_BASE_URL}/ipfs/${metadata?.logoImg}`}
             alt="Project Logo"
             style={{ width: 100, height: 100, borderRadius: "50%" }}
           />
@@ -264,7 +253,7 @@ app.frame("/donate/:poolId/:count/", async (c) => {
               whiteSpace: "pre-wrap",
             }}
           >
-            {metadata?.application?.project.title}
+            {metadata?.title}
           </div>
         </div>
         <div
@@ -294,7 +283,7 @@ app.frame("/donate/:poolId/:count/", async (c) => {
                 fontStyle: "normal",
               }}
             >
-              {metadata?.application?.project?.projectTwitter}
+              {metadata?.projectTwitter}
             </div>
           </div>
           <div
@@ -317,7 +306,7 @@ app.frame("/donate/:poolId/:count/", async (c) => {
                 fontStyle: "normal",
               }}
             >
-              {metadata?.application?.project?.projectGithub}
+              {metadata?.projectGithub}
             </div>
           </div>
         </div>
@@ -326,7 +315,7 @@ app.frame("/donate/:poolId/:count/", async (c) => {
 
     intents: [
       <TextInput placeholder="Enter amount (ETH)" />,
-      <Button.Transaction target={`/allocate/${data.recipientId}`}>
+      <Button.Transaction target={`/allocate/${roundData?.anchoreAddress}`}>
         Donate
       </Button.Transaction>,
       <Button.Link
