@@ -156,7 +156,7 @@ app.frame("/", async (c) => {
 
 app.frame("/donate/:chainId/:poolId/:count/", async (c) => {
   const { chainId, poolId, count } = c.req.param();
-  // TODO: Add strategy Type validation
+
   if (!availableChainId.includes(chainId)) {
     return c.res({
       image: (
@@ -211,6 +211,44 @@ app.frame("/donate/:chainId/:poolId/:count/", async (c) => {
 
   const isActivePool = now >= start && now <= end;
 
+  if (
+    roundData.strategyName !==
+    "allov2.DonationVotingMerkleDistributionDirectTransferStrategy"
+  ) {
+    return c.res({
+      image: (
+        <div
+          style={{
+            alignItems: "center",
+            background: "red",
+            display: "flex",
+            flexDirection: "column",
+            flexWrap: "nowrap",
+            height: "100%",
+            justifyContent: "center",
+            textAlign: "center",
+            width: "100%",
+            fontFamily: "Open Sans",
+            fontWeight: 500,
+            padding: "20px",
+          }}
+        >
+          <div
+            style={{
+              color: "white",
+              fontSize: 100,
+              fontStyle: "normal",
+              letterSpacing: "-0.025em",
+              lineHeight: 1.4,
+              whiteSpace: "pre-wrap",
+            }}
+          >
+            {`This Strategy is not supported`}
+          </div>
+        </div>
+      ),
+    });
+  }
   if (!isActivePool) {
     return c.res({
       image: (
