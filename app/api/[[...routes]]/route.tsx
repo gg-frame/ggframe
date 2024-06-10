@@ -160,8 +160,8 @@ app.frame("/donate/:chainId/:poolId/:count/", async (c) => {
 
   const data = await fetchGrant(Number(chainId), poolId!, count);
 
-  const applicationData = data.data?.rounds[0].applications[0];
-  const roundData = data.data?.rounds[0];
+  const applicationData = data.data?.round.applications[0];
+  const roundData = data.data?.round;
 
   const status = applicationData?.status;
 

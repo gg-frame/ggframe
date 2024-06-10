@@ -1,10 +1,6 @@
 import { gql } from "graphql-request";
 
-export async function fetchGrant(
-  chainId: number,
-  roundId: string,
-  projectId: string
-) {
+export async function fetchGrant(chainId: number, roundId: string, id: string) {
   const res = await fetch(
     "https://grants-stack-indexer-v2.gitcoin.co/graphql",
     {
@@ -14,7 +10,7 @@ export async function fetchGrant(
       },
       body: JSON.stringify({
         query: queryGrant,
-        variables: { chainId, roundId, projectId },
+        variables: { chainId, roundId, id },
       }),
     }
   );
@@ -22,33 +18,12 @@ export async function fetchGrant(
   return data;
 }
 
-const query = gql`
-  query registerd($recipientCount: String!, $pool: String!) {
-    registeredEvents(
-      orderBy: "timestamp"
-      orderDirection: "asc"
-      where: { recipientCount: $recipientCount, pool: $pool }
-    ) {
-      items {
-        id
-        pool
-        recipientId
-        recipientAddress
-        recipientCount
-        metadata
-        sender
-        timestamp
-      }
-    }
-  }
-`;
-
 const queryGrant = gql`
-  query MyQuery($chainId: Int!, $roundId: String!, $projectId: String!) {
-    rounds(condition: { chainId: $chainId, id: $roundId }) {
+  query MyQuery($chainId: Int!, $roundId: String!, $id: String!) {
+    round(chainId: $chainId, id: $roundId) {
       id
       chainId
-      applications(filter: { id: { equalTo: $projectId } }) {
+      applications(condition: { id: $id }) {
         project {
           name
           metadata
