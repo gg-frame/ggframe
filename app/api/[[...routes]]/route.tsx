@@ -147,7 +147,7 @@ app.frame("/", async (c) => {
       <Button.Link href="https://warpcast.com/shutanaka.eth">
         follow me ❤️
       </Button.Link>,
-      <Button.Link href="https://explorer.gitcoin.co/">
+      <Button.Link href="https://explorer.gitcoin.co">
         Explore Gitcoin Grant 🔍
       </Button.Link>,
     ],
