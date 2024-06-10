@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 interface Props {
   params: { counts: string[] };
 }
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const [chainId, poolId, count] = params.counts;
   const baseUrl =

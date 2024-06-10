@@ -115,10 +115,7 @@ app.frame("/", async (c) => {
 });
 
 app.frame("/donate/:chainId/:poolId/:count/", async (c) => {
-  const chainId = c.req.param("chainId");
-  const count = c.req.param("count");
-  const poolId = c.req.param("poolId");
-
+  const { chainId, poolId, count } = c.req.param();
   // TODO: Add strategy Type validation
 
   const data = await fetchGrant(Number(chainId), poolId!, count);
@@ -335,6 +332,7 @@ app.transaction("/allocate/:recipientId", async (c) => {
   const { inputText } = c;
   const recipientId = c.req.param("recipientId");
 
+  // TODO: add tx confirmation status
   return c.contract({
     abi: allo.abi,
     chainId: "eip155:42161",
