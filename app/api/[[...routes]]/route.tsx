@@ -40,6 +40,46 @@ const gradients = [
   "linear-gradient(to right, #36D1DC, #5B86E5)",
 ];
 
+const availableChainId = [
+  "1",
+  "42161",
+  "8453",
+  "666666666",
+  "100",
+  "10",
+  "7777777",
+  "42170",
+  "84532",
+];
+
+function getChainId(chainId: string) {
+  switch (chainId) {
+    // Mainnet
+    case "1":
+      return "eip155:1";
+    // Arbitrum
+    case "42161":
+      return "eip155:42161";
+    // Base
+    case "8453":
+      return "eip155:8453";
+    // Degen
+    case "666666666":
+      return "eip155:666666666";
+    // Gnosis
+    case "100":
+      return "eip155:100";
+    // Optimism
+    case "10":
+      return "eip155:10";
+    // Zora
+    case "7777777":
+      return "eip155:7777777";
+    default:
+      return "eip155:42161";
+  }
+}
+
 // Uncomment to use Edge Runtime
 // export const runtime = 'edge'
 app.frame("/", async (c) => {
@@ -108,7 +148,7 @@ app.frame("/", async (c) => {
         follow me ❤️
       </Button.Link>,
       <Button.Link href="https://explorer.gitcoin.co/">
-        Explore GG 🔍
+        Explore Gitcoin Grant 🔍
       </Button.Link>,
     ],
   });
@@ -117,6 +157,41 @@ app.frame("/", async (c) => {
 app.frame("/donate/:chainId/:poolId/:count/", async (c) => {
   const { chainId, poolId, count } = c.req.param();
   // TODO: Add strategy Type validation
+  if (!availableChainId.includes(chainId)) {
+    return c.res({
+      image: (
+        <div
+          style={{
+            alignItems: "center",
+            background: "red",
+            display: "flex",
+            flexDirection: "column",
+            flexWrap: "nowrap",
+            height: "100%",
+            justifyContent: "center",
+            textAlign: "center",
+            width: "100%",
+            fontFamily: "Open Sans",
+            fontWeight: 500,
+            padding: "20px",
+          }}
+        >
+          <div
+            style={{
+              color: "white",
+              fontSize: 100,
+              fontStyle: "normal",
+              letterSpacing: "-0.025em",
+              lineHeight: 1.4,
+              whiteSpace: "pre-wrap",
+            }}
+          >
+            {`ChainId ${chainId} is not supported`}
+          </div>
+        </div>
+      ),
+    });
+  }
 
   const data = await fetchGrant(Number(chainId), poolId!, count);
 
@@ -352,10 +427,10 @@ app.transaction("/allocate/:chainId/:recipientId", async (c) => {
   const chainId = c.req.param("chainId");
   const recipientId = c.req.param("recipientId");
 
-  // TODO: add multiple chainId support
+  const chain = getChainId(chainId);
   return c.contract({
     abi: allo.abi,
-    chainId: "eip155:42161",
+    chainId: chain,
     functionName: "allocate",
     to: allo.address,
     args: [parseEther(inputText!), recipientId as `0x${string}`],
