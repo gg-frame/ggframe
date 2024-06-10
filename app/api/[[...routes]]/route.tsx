@@ -334,7 +334,7 @@ app.frame("/donate/:chainId/:poolId/:count/", async (c) => {
     intents: [
       <TextInput placeholder="Enter amount (ETH)" />,
       <Button.Transaction
-        target={`/allocate/${applicationData?.anchoreAddress}`}
+        target={`/allocate/${chainId}/${applicationData?.anchoreAddress}`}
       >
         Donate
       </Button.Transaction>,
@@ -347,11 +347,12 @@ app.frame("/donate/:chainId/:poolId/:count/", async (c) => {
   });
 });
 
-app.transaction("/allocate/:recipientId", async (c) => {
+app.transaction("/allocate/:chainId/:recipientId", async (c) => {
   const { inputText } = c;
+  const chainId = c.req.param("chainId");
   const recipientId = c.req.param("recipientId");
 
-  // TODO: add tx confirmation status
+  // TODO: add multiple chainId support
   return c.contract({
     abi: allo.abi,
     chainId: "eip155:42161",
