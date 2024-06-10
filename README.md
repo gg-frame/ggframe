@@ -10,6 +10,8 @@ GG frame is a Farcaster Frame built to make it easier for users to donate to the
 
 ### Allo V2 Contract Address on Arbitrum
 
+※Contract address is the same across all deployed chain! check [here](https://github.com/allo-protocol/allo-v2/tree/main/contracts)
+
 [0x1133eA7Af70876e64665ecD07C0A0476d09465a1](https://arbiscan.io/address/0x1133eA7Af70876e64665ecD07C0A0476d09465a1)
 
 ## Resources
@@ -26,7 +28,7 @@ From the [Gitcoin Grant Explorer](https://explorer.gitcoin.co/), open the projec
 
 Copy the two numbers after `https://explorer.gitcoin.co/#/round/`. In this case it is `/42161//25/156`
 
-**Note:** The Gitcoin Grant is currently hosted on Arbitrum mainnet (chainId: 42161) and the GG frame only supports Arbitrum mainnet at this time.
+**Note:** The Gitcoin Grant is currently hosted on Arbitrum mainnet (chainId: 42161) and the GG frame only works on chains that farcaster supports.
 
 ![Screenshot 2024-06-07 at 21 01 44](https://github.com/tnkshuuhei/gg-frame/assets/67859510/572a42b3-17ca-4da8-8c1f-11caad5d45a6)
 
@@ -34,11 +36,11 @@ Copy the two numbers after `https://explorer.gitcoin.co/#/round/`. In this case 
 
 Open warpcast, and then paste the link with the numbers you copied before like below
 
-`https://ggframe.xyz/api/donate/42161/25/156`
+`https://ggframe.xyz/donate/42161/25/156`
 
 then, frame will be automatically created, and just cast it!
 
-<img width="590" alt="Screenshot 2024-06-07 at 21 27 31" src="https://github.com/tnkshuuhei/gg-frame/assets/67859510/c7bccf18-136e-423f-b12a-618062e06f85">
+<img width="582" alt="Screenshot 2024-06-10 at 22 17 54" src="https://github.com/tnkshuuhei/gg-frame/assets/67859510/e0836b1b-38dd-4b61-925b-ca67eaf7456f">
 
 <img width="354" alt="Screenshot 2024-06-07 at 21 27 58" src="https://github.com/tnkshuuhei/gg-frame/assets/67859510/d6f4c3a1-191d-4ae3-9f06-81a2f837431e">
 
