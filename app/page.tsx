@@ -6,7 +6,7 @@ import styles from "./page.module.css";
 
 export async function generateMetadata(): Promise<Metadata> {
   const frameTags = await getFrameMetadata(
-    `https://gg-frame-three.vercel.app/api`
+    `https://ggframe.xyz/api`
   );
   return {
     other: frameTags,

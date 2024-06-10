@@ -8,13 +8,9 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const [chainId, poolId, count] = params.counts;
-  const baseUrl =
-    process.env.MODE === "dev"
-      ? "http://localhost:3000"
-      : process.env.VERCEL_URL!;
 
   const frameTags = await getFrameMetadata(
-    `https://gg-frame-three.vercel.app/api/donate/${chainId}/${poolId}/${count}`
+    `https://ggframe.xyz/api/donate/${chainId}/${poolId}/${count}`
   );
 
   return {
