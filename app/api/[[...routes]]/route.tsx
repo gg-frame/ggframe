@@ -176,405 +176,9 @@ app.frame("/donate/:chainId/:poolId/:count/", async (c) => {
 
   const isActivePool = now >= start && now <= end;
 
-  if (!availableChainId.includes(chainId)) {
-    return c.res({
-      image: (
-        <div
-          style={{
-            alignItems: "center",
-            background: randomGradient,
-            backgroundSize: "100% 100%",
-            display: "flex",
-            flexDirection: "column",
-            flexWrap: "nowrap",
-            height: "100%",
-            justifyContent: "center",
-            textAlign: "center",
-            width: "100%",
-            fontFamily: "Open Sans",
-            fontWeight: 500,
-            padding: "20px",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-              marginBottom: 20,
-              padding: "0 120px",
-              gap: "20px",
-            }}
-          >
-            <img
-              src={`${process.env.IPFS_BASE_URL}/ipfs/${metadata?.logoImg}`}
-              alt="Project Logo"
-              style={{ width: 100, height: 100, borderRadius: "50%" }}
-            />
-            <div
-              style={{
-                color: "white",
-                fontSize: 70,
-                fontStyle: "normal",
-                letterSpacing: "-0.025em",
-                lineHeight: 1.4,
-                whiteSpace: "pre-wrap",
-              }}
-            >
-              {metadata?.title}
-            </div>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            {metadata?.projectTwitter && (
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  marginBottom: 20,
-                }}
-              >
-                <img
-                  src={XLogo.src}
-                  alt="X Logo"
-                  style={{ width: 40, height: 40, marginRight: 10 }}
-                />
-                <div
-                  style={{
-                    color: "white",
-                    fontSize: 40,
-                  }}
-                >
-                  {metadata?.projectTwitter}
-                </div>
-              </div>
-            )}
-            {metadata?.projectGithub && (
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  marginBottom: 20,
-                }}
-              >
-                <img
-                  src={GithubLogo.src}
-                  alt="Github Logo"
-                  style={{ width: 40, height: 40, marginRight: 10 }}
-                />
-                <div
-                  style={{
-                    color: "white",
-                    fontSize: 40,
-                  }}
-                >
-                  {metadata?.projectGithub}
-                </div>
-              </div>
-            )}
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                marginBottom: 20,
-              }}
-            >
-              <div
-                style={{
-                  color: "white",
-                  fontSize: 50,
-                }}
-              >
-                {`$${applicationData?.totalAmountDonatedInUsd} donations from ${applicationData?.uniqueDonorsCount} donors`}
-              </div>
-            </div>
-          </div>
-        </div>
-      ),
-      intents: [
-        <Button.Link
-          href={`https://explorer.gitcoin.co/#/round/${chainId}/${poolId}/${count}`}
-        >
-          🔍 View Details
-        </Button.Link>,
-      ],
-    });
-  }
-  if (
-    roundData.strategyName !==
-    "allov2.DonationVotingMerkleDistributionDirectTransferStrategy"
-  ) {
-    return c.res({
-      image: (
-        <div
-          style={{
-            alignItems: "center",
-            background: randomGradient,
-            backgroundSize: "100% 100%",
-            display: "flex",
-            flexDirection: "column",
-            flexWrap: "nowrap",
-            height: "100%",
-            justifyContent: "center",
-            textAlign: "center",
-            width: "100%",
-            fontFamily: "Open Sans",
-            fontWeight: 500,
-            padding: "20px",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-              marginBottom: 20,
-              padding: "0 120px",
-              gap: "20px",
-            }}
-          >
-            <img
-              src={`${process.env.IPFS_BASE_URL}/ipfs/${metadata?.logoImg}`}
-              alt="Project Logo"
-              style={{ width: 100, height: 100, borderRadius: "50%" }}
-            />
-            <div
-              style={{
-                color: "white",
-                fontSize: 70,
-                fontStyle: "normal",
-                letterSpacing: "-0.025em",
-                lineHeight: 1.4,
-                whiteSpace: "pre-wrap",
-              }}
-            >
-              {metadata?.title}
-            </div>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            {metadata?.projectTwitter && (
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  marginBottom: 20,
-                }}
-              >
-                <img
-                  src={XLogo.src}
-                  alt="X Logo"
-                  style={{ width: 40, height: 40, marginRight: 10 }}
-                />
-                <div
-                  style={{
-                    color: "white",
-                    fontSize: 40,
-                  }}
-                >
-                  {metadata?.projectTwitter}
-                </div>
-              </div>
-            )}
-            {metadata?.projectGithub && (
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  marginBottom: 20,
-                }}
-              >
-                <img
-                  src={GithubLogo.src}
-                  alt="Github Logo"
-                  style={{ width: 40, height: 40, marginRight: 10 }}
-                />
-                <div
-                  style={{
-                    color: "white",
-                    fontSize: 40,
-                  }}
-                >
-                  {metadata?.projectGithub}
-                </div>
-              </div>
-            )}
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                marginBottom: 20,
-              }}
-            >
-              <div
-                style={{
-                  color: "white",
-                  fontSize: 50,
-                }}
-              >
-                {`$${applicationData?.totalAmountDonatedInUsd} donations from ${applicationData?.uniqueDonorsCount} donors`}
-              </div>
-            </div>
-          </div>
-        </div>
-      ),
-      intents: [
-        <Button.Link
-          href={`https://explorer.gitcoin.co/#/round/${chainId}/${poolId}/${count}`}
-        >
-          🔍 View Details
-        </Button.Link>,
-      ],
-    });
-  }
-  if (!isActivePool) {
-    return c.res({
-      image: (
-        <div
-          style={{
-            alignItems: "center",
-            background: randomGradient,
-            backgroundSize: "100% 100%",
-            display: "flex",
-            flexDirection: "column",
-            flexWrap: "nowrap",
-            height: "100%",
-            justifyContent: "center",
-            textAlign: "center",
-            width: "100%",
-            fontFamily: "Open Sans",
-            fontWeight: 500,
-            padding: "20px",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-              marginBottom: 20,
-              padding: "0 120px",
-              gap: "20px",
-            }}
-          >
-            <img
-              src={`${process.env.IPFS_BASE_URL}/ipfs/${metadata?.logoImg}`}
-              alt="Project Logo"
-              style={{ width: 100, height: 100, borderRadius: "50%" }}
-            />
-            <div
-              style={{
-                color: "white",
-                fontSize: 70,
-                fontStyle: "normal",
-                letterSpacing: "-0.025em",
-                lineHeight: 1.4,
-                whiteSpace: "pre-wrap",
-              }}
-            >
-              {metadata?.title}
-            </div>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            {metadata?.projectTwitter && (
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  marginBottom: 20,
-                }}
-              >
-                <img
-                  src={XLogo.src}
-                  alt="X Logo"
-                  style={{ width: 40, height: 40, marginRight: 10 }}
-                />
-                <div
-                  style={{
-                    color: "white",
-                    fontSize: 40,
-                  }}
-                >
-                  {metadata?.projectTwitter}
-                </div>
-              </div>
-            )}
-            {metadata?.projectGithub && (
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  marginBottom: 20,
-                }}
-              >
-                <img
-                  src={GithubLogo.src}
-                  alt="Github Logo"
-                  style={{ width: 40, height: 40, marginRight: 10 }}
-                />
-                <div
-                  style={{
-                    color: "white",
-                    fontSize: 40,
-                  }}
-                >
-                  {metadata?.projectGithub}
-                </div>
-              </div>
-            )}
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                marginBottom: 20,
-              }}
-            >
-              <div
-                style={{
-                  color: "white",
-                  fontSize: 50,
-                }}
-              >
-                {`$${applicationData?.totalAmountDonatedInUsd} donations from ${applicationData?.uniqueDonorsCount} donors`}
-              </div>
-            </div>
-          </div>
-        </div>
-      ),
-      intents: [
-        <Button.Link
-          href={`https://explorer.gitcoin.co/#/round/${chainId}/${poolId}/${count}`}
-        >
-          🔍 View Details
-        </Button.Link>,
-      ],
-    });
-  }
+  const isSupportedStrategy =
+    roundData.strategyName ===
+    "allov2.DonationVotingMerkleDistributionDirectTransferStrategy";
 
   if (status !== "APPROVED") {
     return c.res({
@@ -612,6 +216,28 @@ app.frame("/donate/:chainId/:poolId/:count/", async (c) => {
     });
   }
 
+  const intents =
+    !isActivePool && !availableChainId.includes(chainId) && isSupportedStrategy
+      ? [
+          <TextInput placeholder="Enter amount (ETH)" />,
+          <Button.Transaction
+            target={`/allocate/${chainId}/${poolId}/${applicationData?.anchorAddress}`}
+          >
+            Donate
+          </Button.Transaction>,
+          <Button.Link
+            href={`https://explorer.gitcoin.co/#/round/${chainId}/${poolId}/${count}`}
+          >
+            🔍 View Details
+          </Button.Link>,
+        ]
+      : [
+          <Button.Link
+            href={`https://explorer.gitcoin.co/#/round/${chainId}/${poolId}/${count}`}
+          >
+            🔍 View on Gitcoin Grant
+          </Button.Link>,
+        ];
   return c.res({
     image: (
       <div
@@ -735,19 +361,7 @@ app.frame("/donate/:chainId/:poolId/:count/", async (c) => {
       </div>
     ),
 
-    intents: [
-      <TextInput placeholder="Enter amount (ETH)" />,
-      <Button.Transaction
-        target={`/allocate/${chainId}/${poolId}/${applicationData?.anchorAddress}`}
-      >
-        Donate
-      </Button.Transaction>,
-      <Button.Link
-        href={`https://explorer.gitcoin.co/#/round/${chainId}/${poolId}/${count}`}
-      >
-        🔍 View Details
-      </Button.Link>,
-    ],
+    intents: intents,
   });
 });
 
