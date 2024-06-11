@@ -366,13 +366,11 @@ app.frame("/donate/:chainId/:poolId/:count/", async (c) => {
   });
 });
 
-app.transaction("/allocate/:chainId/:poolId/:recipientId", async (c) => {
+app.transaction("/allocate/:chainId/:poolId/:recipientId/", async (c) => {
   const { inputText } = c;
-  const chainId = c.req.param("chainId");
-  const recipientId = c.req.param("recipientId");
-  const poolId = c.req.param("poolId");
+  const { chainId, poolId, recipientId } = c.req.param();
 
-  const chain = getChainId(chainId);
+  const chain = getChainId(chainId!);
   const NATIVE = "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE".toLowerCase();
   const permitType = 0; // None
   const encoder = new ethers.AbiCoder();
