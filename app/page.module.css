@@ -108,6 +108,13 @@
 .logo {
   position: relative;
 }
+
+.title {
+  position: relative;
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: center;
+}
 /* Enable hover only on non-touch devices */
 @media (hover: hover) and (pointer: fine) {
   .card:hover {

@@ -17,8 +17,8 @@ export default function Home() {
       <div className={styles.description}>
         <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
           <p>
-            Get started by editing&nbsp;
-            <code className={styles.code}>app/page.tsx</code>
+            Get started by exploring&nbsp;
+            <code className={styles.code}>Gitcoin Grant</code>
           </p>
           <p>
             Head to{" "}
@@ -33,32 +33,17 @@ export default function Home() {
         </div>
         <div>
           <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
+            href="https://warpcast.com/shutanaka.eth"
             target="_blank"
             rel="noopener noreferrer"
           >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
+            By <div>shutanaka.eth</div>
           </a>
         </div>
       </div>
 
       <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
+        <div className={styles.title}>ggframe.xyz</div>
       </div>
 
       <div className={styles.grid}>
@@ -71,19 +56,19 @@ export default function Home() {
           <h2>
             Docs <span>-&gt;</span>
           </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
+          <p>Learn how to use GG Frame to promote your project.</p>
         </a>
 
         <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
+          href="https://github.com/tnkshuuhei/gg-frame"
           className={styles.card}
           target="_blank"
           rel="noopener noreferrer"
         >
           <h2>
-            Learn <span>-&gt;</span>
+            Github <span>-&gt;</span>
           </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
+          <p>Dig into the source code of GG Frame.</p>
         </a>
 
         <a
@@ -93,9 +78,11 @@ export default function Home() {
           rel="noopener noreferrer"
         >
           <h2>
-            Templates <span>-&gt;</span>
+            Warpcast <span>-&gt;</span>
           </h2>
-          <p>Explore starter templates for Next.js.</p>
+          <p>
+            Follow the official GG Frame Warpcast account for updates and more.
+          </p>
         </a>
 
         <a
@@ -105,10 +92,10 @@ export default function Home() {
           rel="noopener noreferrer"
         >
           <h2>
-            Deploy <span>-&gt;</span>
+            X(Twitter) <span>-&gt;</span>
           </h2>
           <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
+            Follow the official GG Frame Twitter account for updates and more.
           </p>
         </a>
       </div>
