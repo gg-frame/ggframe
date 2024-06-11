@@ -402,6 +402,7 @@ app.transaction("/allocate/:chainId/:poolId/:recipientId", async (c) => {
     functionName: "allocate",
     to: allo.address,
     args: [BigInt(poolId), data as `0x${string}`],
+    attribution: true,
     value: parseEther(inputText!),
   });
 });
