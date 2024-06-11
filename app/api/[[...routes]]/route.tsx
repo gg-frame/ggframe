@@ -18,6 +18,7 @@ if (!process.env.IPFS_BASE_URL) {
 const app = new Frog({
   assetsPath: "/",
   basePath: "/api",
+  browserLocation: "/",
   // Supply a Hub to enable frame verification.
   // hub: neynar({ apiKey: 'NEYNAR_FROG_FM' })
   imageOptions: {
@@ -404,6 +405,56 @@ app.transaction("/allocate/:chainId/:poolId/:recipientId", async (c) => {
     args: [BigInt(poolId), data as `0x${string}`],
     attribution: true,
     value: parseEther(inputText!),
+  });
+});
+
+app.frame("/finish", (c) => {
+  const { transactionId } = c;
+  return c.res({
+    image: (
+      <div
+        style={{
+          alignItems: "center",
+          background: "linear-gradient(to right, #36D1DC, #5B86E5)",
+          display: "flex",
+          flexDirection: "column",
+          flexWrap: "nowrap",
+          height: "100%",
+          justifyContent: "center",
+          textAlign: "center",
+          width: "100%",
+          fontFamily: "Open Sans",
+          fontWeight: 500,
+          padding: "20px",
+        }}
+      >
+        <div
+          style={{
+            color: "white",
+            fontSize: 100,
+            fontStyle: "normal",
+            letterSpacing: "-0.025em",
+            lineHeight: 1.4,
+            whiteSpace: "pre-wrap",
+          }}
+        >
+          Your donation is complete!
+        </div>
+        <div
+          style={{
+            color: "white",
+            fontSize: 40,
+            fontStyle: "normal",
+            letterSpacing: "-0.025em",
+            lineHeight: 1.4,
+            whiteSpace: "pre-wrap",
+          }}
+        >
+          {`Transaction ID: ${transactionId}`}
+        </div>
+      </div>
+    ),
+    intents: [<Button.Reset>Back</Button.Reset>],
   });
 });
 
