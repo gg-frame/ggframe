@@ -217,7 +217,7 @@ app.frame("/donate/:chainId/:poolId/:count/", async (c) => {
   }
 
   const intents =
-    !isActivePool && !availableChainId.includes(chainId) && isSupportedStrategy
+    isActivePool && availableChainId.includes(chainId) && isSupportedStrategy
       ? [
           <TextInput placeholder="Enter amount (ETH)" />,
           <Button.Transaction
