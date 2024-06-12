@@ -146,11 +146,8 @@ app.frame("/", async (c) => {
       <Button.Link href="https://github.com/tnkshuuhei/gg-frame">
         Github 🔧
       </Button.Link>,
-      <Button.Link href="https://warpcast.com/shutanaka.eth">
-        follow me ❤️
-      </Button.Link>,
-      <Button.Link href="https://explorer.gitcoin.co">
-        Explore Gitcoin Grant 🔍
+      <Button.Link href="https://warpcast.com/ggframe">
+        follow ggframe ❤️
       </Button.Link>,
     ],
   });
