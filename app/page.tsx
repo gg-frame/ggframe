@@ -72,7 +72,7 @@ export default function Home() {
         </a>
 
         <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
+          href="https://warpcast.com/ggframe"
           className={styles.card}
           target="_blank"
           rel="noopener noreferrer"
@@ -86,7 +86,7 @@ export default function Home() {
         </a>
 
         <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
+          href="https://x.com/ggframexyz"
           className={styles.card}
           target="_blank"
           rel="noopener noreferrer"
