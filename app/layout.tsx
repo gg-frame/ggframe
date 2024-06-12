@@ -8,7 +8,9 @@ export const metadata: Metadata = {
   title: "GG Frame",
   description:
     "GG Frame is built to enable user to donate projects on Gitcoin Round easily.",
-  icons: "/favicon.ico",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
