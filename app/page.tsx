@@ -47,7 +47,7 @@ export default function Home() {
 
       <div className={styles.grid}>
         <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
+          href="https://ggframe.notion.site/GG-Frame-Farcaster-Frame-for-Gitcoin-Grant-a6ecd9c9368a447490c4bb18a761cb6e?pvs=4"
           className={styles.card}
           target="_blank"
           rel="noopener noreferrer"
