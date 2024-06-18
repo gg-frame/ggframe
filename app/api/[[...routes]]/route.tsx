@@ -56,6 +56,13 @@ const availableChainId = [
   "84532",
 ];
 
+function truncateText(description: string, maxLength: number = 100): string {
+  if (description.length <= maxLength) {
+    return description;
+  }
+  return description.substring(0, maxLength) + "...";
+}
+
 function getChainId(chainId: string) {
   switch (chainId) {
     // Mainnet
@@ -215,12 +222,7 @@ app.frame("/donate/:chainId/:poolId/:count/", async (c) => {
       ),
     });
   }
-  function truncateText(description: string, maxLength: number = 100): string {
-    if (description.length <= maxLength) {
-      return description;
-    }
-    return description.substring(0, maxLength) + "...";
-  }
+
   const intents =
     isActivePool && availableChainId.includes(chainId) && isSupportedStrategy
       ? [
