@@ -10,6 +10,8 @@ import { serveStatic } from "frog/serve-static";
 import GithubLogo from "@/public/github-mark/github-mark.png";
 import XLogo from "@/public/x-logo/logo-white.png";
 import { ethers } from "ethers";
+import dollor from "@/public/circle-dollar-sign.png";
+import human from "@/public/person-standing.png";
 
 if (!process.env.IPFS_BASE_URL) {
   throw new Error("IPFS_BASE_URL is not defined");
@@ -213,7 +215,12 @@ app.frame("/donate/:chainId/:poolId/:count/", async (c) => {
       ),
     });
   }
-
+  function truncateText(description: string, maxLength: number = 100): string {
+    if (description.length <= maxLength) {
+      return description;
+    }
+    return description.substring(0, maxLength) + "...";
+  }
   const intents =
     isActivePool && availableChainId.includes(chainId) && isSupportedStrategy
       ? [
@@ -280,14 +287,17 @@ app.frame("/donate/:chainId/:poolId/:count/", async (c) => {
               whiteSpace: "pre-wrap",
             }}
           >
-            {metadata?.title}
+            {truncateText(metadata?.title, 20)}
           </div>
         </div>
+
         <div
           style={{
             display: "flex",
-            flexDirection: "column",
+            flexDirection: "row",
             alignItems: "center",
+            justifyContent: "center",
+            gap: "20px",
           }}
         >
           {metadata?.projectTwitter && (
@@ -338,6 +348,17 @@ app.frame("/donate/:chainId/:poolId/:count/", async (c) => {
               </div>
             </div>
           )}
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "20px",
+          }}
+        >
           <div
             style={{
               display: "flex",
@@ -346,19 +367,50 @@ app.frame("/donate/:chainId/:poolId/:count/", async (c) => {
               marginBottom: 20,
             }}
           >
+            <img
+              src={dollor.src}
+              alt="dollor"
+              style={{ width: 40, height: 40, marginRight: 10 }}
+            />
             <div
               style={{
                 color: "white",
-                fontSize: 50,
+                fontSize: 40,
               }}
             >
-              {`$${applicationData?.totalAmountDonatedInUsd} donations from ${applicationData?.uniqueDonorsCount} donors`}
+              {`${applicationData?.totalAmountDonatedInUsd}`}
+            </div>
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              marginBottom: 20,
+            }}
+          >
+            <img
+              src={human.src}
+              alt="human"
+              style={{ width: 40, height: 40, marginRight: 10 }}
+            />
+            <div
+              style={{
+                color: "white",
+                fontSize: 40,
+              }}
+            >
+              {`${applicationData?.uniqueDonorsCount}`}
             </div>
           </div>
         </div>
+        <div style={{ color: "white", fontSize: 30 }}>{`${truncateText(
+          metadata?.description,
+          250
+        )}`}</div>
       </div>
     ),
-
     intents: intents,
   });
 });
