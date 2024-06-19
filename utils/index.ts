@@ -53,3 +53,9 @@ export function getChainId(chainId: string) {
       return "eip155:42161";
   }
 }
+
+export function extractRoundInfo(url: string): string {
+  if (!url) return "";
+  const match = url.match(/round\/(.*)/);
+  return match ? match[1] : "";
+}
