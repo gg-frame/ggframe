@@ -33,7 +33,7 @@ const app = new Frog({
   basePath: "/api",
   browserLocation: "/",
 
-  hub: neynar({ apiKey: process.env.NAYNAR_API_KEY! }),
+  // hub: neynar({ apiKey: process.env.NAYNAR_API_KEY! }),
   imageOptions: {
     fonts: [
       {
@@ -114,19 +114,11 @@ app.frame("/", async (c) => {
       <Button.Link href="https://warpcast.com/ggframe">
         follow ggframe ❤️
       </Button.Link>,
+      <Button action="/create">Create Frame</Button>,
     ],
   });
 });
 app.frame("/create", (c) => {
-  const text = "Donate us on Gitcoin!";
-  const { inputText } = c;
-  const projectURL = inputText;
-  const url = `https://warpcast.com/~/compose?text=${text}&embeds[]=https://ggframe.xyz/api/donate/${extractRoundInfo(
-    projectURL!
-  )}`;
-
-  const placeholder = "Paste your Project URL here!";
-
   return c.res({
     image: (
       <div
@@ -184,9 +176,282 @@ app.frame("/create", (c) => {
         </div>
       </div>
     ),
+
     intents: [
-      <TextInput placeholder={placeholder} />,
-      <Button.Link href={url}>Cast with frame</Button.Link>,
+      <TextInput placeholder="Paste your Project URL here!" />,
+      <Button action="/cast">Next</Button>,
+    ],
+  });
+});
+
+app.frame("/cast", async (c) => {
+  const { inputText } = c;
+
+  const pjURL = inputText!;
+
+  const roundInfo = extractRoundInfo(pjURL);
+
+  if (!roundInfo) {
+    return c.res({
+      image: (
+        <div
+          style={{
+            alignItems: "center",
+            background: "red",
+            display: "flex",
+            flexDirection: "column",
+            flexWrap: "nowrap",
+            height: "100%",
+            justifyContent: "center",
+            textAlign: "center",
+            width: "100%",
+            fontFamily: "Open Sans",
+            fontWeight: 500,
+            padding: "20px",
+          }}
+        >
+          <div
+            style={{
+              color: "white",
+              fontSize: 100,
+              fontStyle: "normal",
+              letterSpacing: "-0.025em",
+              lineHeight: 1.4,
+              whiteSpace: "pre-wrap",
+            }}
+          >
+            Invalid URL
+          </div>
+        </div>
+      ),
+    });
+  }
+
+  const chainId = roundInfo[0];
+  const poolId = roundInfo[1];
+  const count = roundInfo[2];
+
+  const data = await fetchGrant(Number(chainId), poolId!, count);
+
+  const applicationData = data.data?.round.applications[0];
+
+  const status = applicationData?.status;
+
+  const metadata = applicationData?.project.metadata;
+
+  const randomGradient =
+    gradients[Math.floor(Math.random() * gradients.length)];
+
+  const text = `Donate%20to%20${metadata?.title}%20on%20Gitcoin!`;
+
+  const url = `https://warpcast.com/~/compose?text=${text}&embeds[]=https://ggframe.xyz/api/donate/${chainId}/${poolId}/${count}`;
+  if (status !== "APPROVED") {
+    return c.res({
+      image: (
+        <div
+          style={{
+            alignItems: "center",
+            background: "red",
+            display: "flex",
+            flexDirection: "column",
+            flexWrap: "nowrap",
+            height: "100%",
+            justifyContent: "center",
+            textAlign: "center",
+            width: "100%",
+            fontFamily: "Open Sans",
+            fontWeight: 500,
+            padding: "20px",
+          }}
+        >
+          <div
+            style={{
+              color: "white",
+              fontSize: 100,
+              fontStyle: "normal",
+              letterSpacing: "-0.025em",
+              lineHeight: 1.4,
+              whiteSpace: "pre-wrap",
+            }}
+          >
+            This project is not approved
+          </div>
+        </div>
+      ),
+    });
+  }
+
+  return c.res({
+    image: (
+      <div
+        style={{
+          alignItems: "center",
+          background: randomGradient,
+          backgroundSize: "100% 100%",
+          display: "flex",
+          flexDirection: "column",
+          flexWrap: "nowrap",
+          height: "100%",
+          justifyContent: "center",
+          textAlign: "center",
+          width: "100%",
+          fontFamily: "Open Sans",
+          fontWeight: 500,
+          padding: "20px",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            marginBottom: 20,
+            padding: "0 120px",
+            gap: "20px",
+          }}
+        >
+          <img
+            src={`${process.env.IPFS_BASE_URL}/ipfs/${metadata?.logoImg}`}
+            alt="Project Logo"
+            style={{ width: 100, height: 100, borderRadius: "50%" }}
+          />
+          <div
+            style={{
+              color: "white",
+              fontSize: 70,
+              fontStyle: "normal",
+              letterSpacing: "-0.025em",
+              lineHeight: 1.4,
+              whiteSpace: "pre-wrap",
+            }}
+          >
+            {truncateText(metadata?.title, 20)}
+          </div>
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "20px",
+          }}
+        >
+          {metadata?.projectTwitter && (
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                marginBottom: 20,
+              }}
+            >
+              <img
+                src={XLogo.src}
+                alt="X Logo"
+                style={{ width: 40, height: 40, marginRight: 10 }}
+              />
+              <div
+                style={{
+                  color: "white",
+                  fontSize: 40,
+                }}
+              >
+                {metadata?.projectTwitter}
+              </div>
+            </div>
+          )}
+          {metadata?.projectGithub && (
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                marginBottom: 20,
+              }}
+            >
+              <img
+                src={GithubLogo.src}
+                alt="Github Logo"
+                style={{ width: 40, height: 40, marginRight: 10 }}
+              />
+              <div
+                style={{
+                  color: "white",
+                  fontSize: 40,
+                }}
+              >
+                {metadata?.projectGithub}
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "20px",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              marginBottom: 20,
+            }}
+          >
+            <img
+              src={dollor.src}
+              alt="dollor"
+              style={{ width: 40, height: 40, marginRight: 10 }}
+            />
+            <div
+              style={{
+                color: "white",
+                fontSize: 40,
+              }}
+            >
+              {`${applicationData?.totalAmountDonatedInUsd}`}
+            </div>
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              marginBottom: 20,
+            }}
+          >
+            <img
+              src={human.src}
+              alt="human"
+              style={{ width: 40, height: 40, marginRight: 10 }}
+            />
+            <div
+              style={{
+                color: "white",
+                fontSize: 40,
+              }}
+            >
+              {`${applicationData?.uniqueDonorsCount}`}
+            </div>
+          </div>
+        </div>
+        <div style={{ color: "white", fontSize: 30 }}>{`${truncateText(
+          metadata?.description,
+          250
+        )}`}</div>
+      </div>
+    ),
+    intents: [
+      <Button.Reset>Back</Button.Reset>,
+      <Button.Link href={url}>cast with frame</Button.Link>,
     ],
   });
 });
