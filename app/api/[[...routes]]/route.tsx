@@ -4,7 +4,7 @@ import { allo } from "@/abis/Allo";
 import { fetchGrant } from "@/hooks/useRegisteredEvent";
 import { Button, Frog, TextInput, parseEther } from "frog";
 import { devtools } from "frog/dev";
-// import { neynar } from 'frog/hubs'
+import { neynar } from "frog/hubs";
 import { handle } from "frog/next";
 import { serveStatic } from "frog/serve-static";
 import GithubLogo from "@/public/github-mark/github-mark.png";
@@ -21,8 +21,8 @@ const app = new Frog({
   assetsPath: "/",
   basePath: "/api",
   browserLocation: "/",
-  // Supply a Hub to enable frame verification.
-  // hub: neynar({ apiKey: 'NEYNAR_FROG_FM' })
+
+  hub: neynar({ apiKey: process.env.NAYNAR_API_KEY! }),
   imageOptions: {
     fonts: [
       {
