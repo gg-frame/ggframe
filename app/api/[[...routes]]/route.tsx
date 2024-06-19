@@ -33,7 +33,7 @@ const app = new Frog({
   basePath: "/api",
   browserLocation: "/",
 
-  // hub: neynar({ apiKey: process.env.NAYNAR_API_KEY! }),
+  hub: neynar({ apiKey: process.env.NAYNAR_API_KEY! }),
   imageOptions: {
     fonts: [
       {
