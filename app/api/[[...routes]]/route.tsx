@@ -12,7 +12,13 @@ import XLogo from "@/public/x-logo/logo-white.png";
 import { ethers } from "ethers";
 import dollor from "@/public/circle-dollar-sign.png";
 import human from "@/public/person-standing.png";
-import { availableChainId, getChainId, gradients, truncateText } from "@/utils";
+import {
+  availableChainId,
+  extractRoundInfo,
+  getChainId,
+  gradients,
+  truncateText,
+} from "@/utils";
 
 if (!process.env.IPFS_BASE_URL) {
   throw new Error("IPFS_BASE_URL is not defined");
@@ -43,8 +49,6 @@ const app = new Frog({
   },
 });
 
-// Uncomment to use Edge Runtime
-// export const runtime = 'edge'
 app.frame("/", async (c) => {
   return c.res({
     image: (
@@ -110,6 +114,79 @@ app.frame("/", async (c) => {
       <Button.Link href="https://warpcast.com/ggframe">
         follow ggframe ❤️
       </Button.Link>,
+    ],
+  });
+});
+app.frame("/create", (c) => {
+  const text = "Donate us on Gitcoin!";
+  const { inputText } = c;
+  const projectURL = inputText;
+  const url = `https://warpcast.com/~/compose?text=${text}&embeds[]=https://ggframe.xyz/api/donate/${extractRoundInfo(
+    projectURL!
+  )}`;
+
+  const placeholder = "Paste your Project URL here!";
+
+  return c.res({
+    image: (
+      <div
+        style={{
+          alignItems: "center",
+          background: "linear-gradient(to right, #36D1DC, #5B86E5)",
+          display: "flex",
+          flexDirection: "column",
+          flexWrap: "nowrap",
+          height: "100%",
+          justifyContent: "center",
+          textAlign: "center",
+          width: "100%",
+          fontFamily: "Open Sans",
+          fontWeight: 500,
+          padding: "20px",
+        }}
+      >
+        <div
+          style={{
+            color: "white",
+            fontSize: 80,
+            fontStyle: "normal",
+            letterSpacing: "-0.025em",
+            lineHeight: 1.4,
+            whiteSpace: "pre-wrap",
+          }}
+        >
+          Create frame for your project!
+        </div>
+        <div
+          style={{
+            color: "white",
+            fontSize: 50,
+            fontStyle: "normal",
+            letterSpacing: "-0.025em",
+            lineHeight: 1.4,
+            whiteSpace: "pre-wrap",
+            marginTop: 20,
+          }}
+        >
+          👇Paste project url below👇
+        </div>
+        <div
+          style={{
+            color: "white",
+            fontSize: 40,
+            fontStyle: "normal",
+            letterSpacing: "-0.025em",
+            lineHeight: 1.4,
+            whiteSpace: "pre-wrap",
+          }}
+        >
+          {`e.g. https://explorer.gitcoin.co/#/round/42161/25/156`}
+        </div>
+      </div>
+    ),
+    intents: [
+      <TextInput placeholder={placeholder} />,
+      <Button.Link href={url}>Cast with frame</Button.Link>,
     ],
   });
 });
