@@ -12,9 +12,14 @@ import XLogo from "@/public/x-logo/logo-white.png";
 import { ethers } from "ethers";
 import dollor from "@/public/circle-dollar-sign.png";
 import human from "@/public/person-standing.png";
+import { availableChainId, getChainId, gradients, truncateText } from "@/utils";
 
 if (!process.env.IPFS_BASE_URL) {
   throw new Error("IPFS_BASE_URL is not defined");
+}
+
+if (!process.env.NAYNAR_API_KEY) {
+  throw new Error("NAYNAR_API_KEY is not defined");
 }
 
 const app = new Frog({
@@ -37,59 +42,6 @@ const app = new Frog({
     ],
   },
 });
-
-const gradients = [
-  "linear-gradient(to right, #FF7E5F, #FEB47B)",
-  "linear-gradient(to right, #6A82FB, #FC5C7D)",
-  "linear-gradient(to right, #36D1DC, #5B86E5)",
-];
-
-const availableChainId = [
-  "1",
-  "42161",
-  "8453",
-  "666666666",
-  "100",
-  "10",
-  "7777777",
-  "42170",
-  "84532",
-];
-
-function truncateText(description: string, maxLength: number = 100): string {
-  if (description.length <= maxLength) {
-    return description;
-  }
-  return description.substring(0, maxLength) + "...";
-}
-
-function getChainId(chainId: string) {
-  switch (chainId) {
-    // Mainnet
-    case "1":
-      return "eip155:1";
-    // Arbitrum
-    case "42161":
-      return "eip155:42161";
-    // Base
-    case "8453":
-      return "eip155:8453";
-    // Degen
-    case "666666666":
-      return "eip155:666666666";
-    // Gnosis
-    case "100":
-      return "eip155:100";
-    // Optimism
-    case "10":
-      return "eip155:10";
-    // Zora
-    case "7777777":
-      return "eip155:7777777";
-    default:
-      return "eip155:42161";
-  }
-}
 
 // Uncomment to use Edge Runtime
 // export const runtime = 'edge'
