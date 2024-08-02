@@ -21,6 +21,10 @@ import {
   truncateText,
 } from "@/utils";
 
+if (!process.env.NEXT_PUBLIC_VERCEL_URL) {
+  throw new Error("NEXT_PUBLIC_VERCEL_URL is not defined");
+}
+
 const donaminURL = process.env.NEXT_PUBLIC_VERCEL_URL!;
 
 if (!process.env.IPFS_BASE_URL) {

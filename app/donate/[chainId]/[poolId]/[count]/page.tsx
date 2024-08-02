@@ -4,6 +4,10 @@ import type { Metadata } from "next";
 
 const url = process.env.NEXT_PUBLIC_VERCEL_URL!;
 
+if (!process.env.NEXT_PUBLIC_VERCEL_URL) {
+  throw new Error("NEXT_PUBLIC_VERCEL_URL is not defined");
+}
+
 export async function generateMetadata({
   params,
 }: {
