@@ -23,6 +23,7 @@ const queryGrant = gql`
     round(chainId: $chainId, id: $roundId) {
       id
       chainId
+      roundMetadata
       applications(condition: { id: $id }) {
         project {
           name
