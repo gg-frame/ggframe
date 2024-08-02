@@ -1,12 +1,11 @@
-/** @jsxImportSource frog/jsx */
+/** @jsxImportSource @airstack/frog/jsx */
 
 import { allo } from "@/abis/Allo";
 import { fetchGrant } from "@/hooks/useRegisteredEvent";
-import { Button, Frog, TextInput, parseEther } from "frog";
-import { devtools } from "frog/dev";
-// import { neynar } from "frog/hubs";
-import { handle } from "frog/next";
-import { serveStatic } from "frog/serve-static";
+import { Button, Frog, TextInput, parseEther } from "@airstack/frog";
+import { devtools } from "@airstack/frog/dev";
+import { handle } from "@airstack/frog/next";
+import { serveStatic } from "@airstack/frog/serve-static";
 import GithubLogo from "@/public/github-mark/github-mark.png";
 import XLogo from "@/public/x-logo/logo-white.png";
 import { ethers } from "ethers";
@@ -24,16 +23,17 @@ if (!process.env.IPFS_BASE_URL) {
   throw new Error("IPFS_BASE_URL is not defined");
 }
 
-if (!process.env.NAYNAR_API_KEY) {
-  throw new Error("NAYNAR_API_KEY is not defined");
+if (!process.env.AIRSTACK_API_KEY) {
+  throw new Error("AIRSTACK_API_KEY is not defined");
 }
 
 const app = new Frog({
+  title: "ggframe",
+  apiKey: process.env.AIRSTACK_API_KEY as string,
   assetsPath: "/",
   basePath: "/api",
   browserLocation: "/",
 
-  // hub: neynar({ apiKey: process.env.NAYNAR_API_KEY! }),
   imageOptions: {
     fonts: [
       {
@@ -49,7 +49,7 @@ const app = new Frog({
   },
 });
 
-app.frame("/", async (c) => {
+app.frame("/", async function (c) {
   return c.res({
     image: (
       <div
@@ -118,7 +118,7 @@ app.frame("/", async (c) => {
     ],
   });
 });
-app.frame("/create", (c) => {
+app.frame("/create", async function (c) {
   return c.res({
     image: (
       <div
@@ -184,7 +184,7 @@ app.frame("/create", (c) => {
   });
 });
 
-app.frame("/cast", async (c) => {
+app.frame("/cast", async function (c) {
   const { inputText } = c;
 
   const pjURL = inputText!;
@@ -456,7 +456,7 @@ app.frame("/cast", async (c) => {
   });
 });
 
-app.frame("/donate/:chainId/:poolId/:count/", async (c) => {
+app.frame("/donate/:chainId/:poolId/:count/", async function (c) {
   const { chainId, poolId, count } = c.req.param();
 
   const data = await fetchGrant(Number(chainId), poolId!, count);
@@ -711,7 +711,7 @@ app.frame("/donate/:chainId/:poolId/:count/", async (c) => {
   });
 });
 
-app.transaction("/allocate/:chainId/:poolId/:recipientId/", async (c) => {
+app.transaction("/allocate/:chainId/:poolId/:recipientId/", async function (c) {
   const { inputText } = c;
   const { chainId, poolId, recipientId } = c.req.param();
 
