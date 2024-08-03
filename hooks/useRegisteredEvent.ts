@@ -1,21 +1,40 @@
 import { gql } from "graphql-request";
 
 export async function fetchGrant(chainId: number, roundId: string, id: string) {
-  const res = await fetch(
-    "https://grants-stack-indexer-v2.gitcoin.co/graphql",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        query: queryGrant,
-        variables: { chainId, roundId, id },
-      }),
+  try {
+    const res = await fetch(
+      "https://grants-stack-indexer-v2.gitcoin.co/graphql",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          query: queryGrant,
+          variables: { chainId, roundId, id },
+        }),
+      }
+    );
+
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
     }
-  );
-  const data = await res.json();
-  return data;
+
+    const contentType = res.headers.get("content-type");
+    if (!contentType || !contentType.includes("application/json")) {
+      const errorText = await res.text();
+      console.error(`Expected JSON, but received ${contentType}`);
+      console.error("Error response:", errorText);
+      throw new Error(`Expected JSON, but received ${contentType}`);
+    }
+
+    const data = await res.json();
+    console.log("Response data:", data);
+    return data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
 }
 
 const queryGrant = gql`
