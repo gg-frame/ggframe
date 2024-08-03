@@ -4,7 +4,6 @@ import { allo } from "@/abis/Allo";
 import { fetchGrant } from "@/hooks/useRegisteredEvent";
 import { Button, Frog, TextInput, parseEther } from "frog";
 import { devtools } from "frog/dev";
-// import { neynar } from "frog/hubs";
 import { handle } from "frog/next";
 import { serveStatic } from "frog/serve-static";
 import GithubLogo from "@/public/github-mark/github-mark.png";
@@ -31,16 +30,10 @@ if (!process.env.IPFS_BASE_URL) {
   throw new Error("IPFS_BASE_URL is not defined");
 }
 
-if (!process.env.NAYNAR_API_KEY) {
-  throw new Error("NAYNAR_API_KEY is not defined");
-}
-
 const app = new Frog({
   assetsPath: "/",
   basePath: "/api",
   browserLocation: "/",
-
-  // hub: neynar({ apiKey: process.env.NAYNAR_API_KEY! }),
   imageOptions: {
     fonts: [
       {
