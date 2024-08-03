@@ -303,7 +303,7 @@ app.frame("/cast", async (c) => {
           style={{
             color: "white",
           }}
-        >{`${roundname} round on ${chainData.name}`}</div>
+        >{`${roundname} on ${chainData.name}`}</div>
         <div
           style={{
             display: "flex",
@@ -478,6 +478,7 @@ app.frame("/donate/:chainId/:poolId/:count/", async (c) => {
 
   const applicationData = data.data?.round.applications[0];
   const roundData = data.data?.round;
+
   const roundname = data.data.round.roundMetadata.name;
   const chainData: chainConfig = getChainConfig(chainId)!;
 
@@ -570,7 +571,7 @@ app.frame("/donate/:chainId/:poolId/:count/", async (c) => {
           style={{
             color: "white",
           }}
-        >{`${roundname} round on ${chainData.name}`}</div>
+        >{`${roundname} on ${chainData.name}`}</div>
         <div
           style={{
             display: "flex",
