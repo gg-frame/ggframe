@@ -13,9 +13,7 @@ import dollor from "@/public/circle-dollar-sign.png";
 import human from "@/public/person-standing.png";
 import {
   availableChainId,
-  chainConfig,
   extractRoundInfo,
-  getChainConfig,
   getChainId,
   truncateText,
 } from "@/utils";
@@ -25,7 +23,7 @@ if (!process.env.IPFS_BASE_URL) {
 }
 
 const app = new Frog({
-  title: "ggframe",
+  title: "GG Frame",
   assetsPath: "/",
   basePath: "/api",
   browserLocation: "/",
@@ -44,7 +42,7 @@ const app = new Frog({
   },
 });
 
-app.frame("/", (c) => {
+app.frame("/", async (c) => {
   return c.res({
     image: (
       <div
@@ -113,7 +111,6 @@ app.frame("/", (c) => {
     ],
   });
 });
-
 app.frame("/create", (c) => {
   return c.res({
     image: (
@@ -228,8 +225,7 @@ app.frame("/cast", async (c) => {
   const count = roundInfo[2];
 
   const data = await fetchGrant(Number(chainId), poolId!, count);
-  const roundname = data.data.round.roundMetadata.name;
-  const chainData: chainConfig = getChainConfig(chainId)!;
+
   const applicationData = data.data?.round.applications[0];
 
   const status = applicationData?.status;
@@ -279,26 +275,26 @@ app.frame("/cast", async (c) => {
     image: (
       <div
         style={{
+          alignItems: "center",
           background: "linear-gradient(to right, #36D1DC, #5B86E5)",
-          height: "100%",
-          width: "100%",
+          backgroundSize: "100% 100%",
           display: "flex",
           flexDirection: "column",
-          alignItems: "center",
+          flexWrap: "nowrap",
+          height: "100%",
+          justifyContent: "center",
+          textAlign: "center",
+          width: "100%",
+          fontFamily: "Open Sans",
+          fontWeight: 500,
           padding: "20px",
         }}
       >
         <div
           style={{
-            color: "white",
-          }}
-        >{`${roundname} on ${chainData.name}`}</div>
-        <div
-          style={{
             display: "flex",
             flexDirection: "row",
             alignItems: "center",
-            marginTop: 20,
             marginBottom: 20,
             padding: "0 120px",
             gap: "20px",
@@ -307,12 +303,12 @@ app.frame("/cast", async (c) => {
           <img
             src={`${process.env.IPFS_BASE_URL}/ipfs/${metadata?.logoImg}`}
             alt="Project Logo"
-            style={{ width: 75, height: 75, borderRadius: "50%" }}
+            style={{ width: 100, height: 100, borderRadius: "50%" }}
           />
           <div
             style={{
               color: "white",
-              fontSize: 50,
+              fontSize: 70,
               fontStyle: "normal",
               letterSpacing: "-0.025em",
               lineHeight: 1.4,
@@ -344,12 +340,12 @@ app.frame("/cast", async (c) => {
               <img
                 src={XLogo.src}
                 alt="X Logo"
-                style={{ width: 20, height: 20, marginRight: 10 }}
+                style={{ width: 40, height: 40, marginRight: 10 }}
               />
               <div
                 style={{
                   color: "white",
-                  fontSize: 30,
+                  fontSize: 40,
                 }}
               >
                 {metadata?.projectTwitter}
@@ -368,12 +364,12 @@ app.frame("/cast", async (c) => {
               <img
                 src={GithubLogo.src}
                 alt="Github Logo"
-                style={{ width: 20, height: 20, marginRight: 10 }}
+                style={{ width: 40, height: 40, marginRight: 10 }}
               />
               <div
                 style={{
                   color: "white",
-                  fontSize: 30,
+                  fontSize: 40,
                 }}
               >
                 {metadata?.projectGithub}
@@ -437,22 +433,12 @@ app.frame("/cast", async (c) => {
             </div>
           </div>
         </div>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            padding: "0 300px",
-            marginBottom: 20,
-          }}
-        >
-          <div style={{ color: "white", fontSize: 20 }}>
-            {`${truncateText(metadata?.description, 450)}`}
-          </div>
-        </div>
+        <div style={{ color: "white", fontSize: 30 }}>{`${truncateText(
+          metadata?.description,
+          250
+        )}`}</div>
       </div>
     ),
-    imageAspectRatio: "1:1",
     intents: [
       <Button.Reset>Back</Button.Reset>,
       <Button.Link href={url}>cast with frame</Button.Link>,
@@ -467,9 +453,6 @@ app.frame("/donate/:chainId/:poolId/:count/", async (c) => {
 
   const applicationData = data.data?.round.applications[0];
   const roundData = data.data?.round;
-
-  const roundname = data.data.round.roundMetadata.name;
-  const chainData: chainConfig = getChainConfig(chainId)!;
 
   const status = applicationData?.status;
 
@@ -547,26 +530,26 @@ app.frame("/donate/:chainId/:poolId/:count/", async (c) => {
     image: (
       <div
         style={{
+          alignItems: "center",
           background: "linear-gradient(to right, #36D1DC, #5B86E5)",
-          height: "100%",
-          width: "100%",
+          backgroundSize: "100% 100%",
           display: "flex",
           flexDirection: "column",
-          alignItems: "center",
+          flexWrap: "nowrap",
+          height: "100%",
+          justifyContent: "center",
+          textAlign: "center",
+          width: "100%",
+          fontFamily: "Open Sans",
+          fontWeight: 500,
           padding: "20px",
         }}
       >
         <div
           style={{
-            color: "white",
-          }}
-        >{`${roundname} on ${chainData.name}`}</div>
-        <div
-          style={{
             display: "flex",
             flexDirection: "row",
             alignItems: "center",
-            marginTop: 20,
             marginBottom: 20,
             padding: "0 120px",
             gap: "20px",
@@ -575,12 +558,12 @@ app.frame("/donate/:chainId/:poolId/:count/", async (c) => {
           <img
             src={`${process.env.IPFS_BASE_URL}/ipfs/${metadata?.logoImg}`}
             alt="Project Logo"
-            style={{ width: 75, height: 75, borderRadius: "50%" }}
+            style={{ width: 100, height: 100, borderRadius: "50%" }}
           />
           <div
             style={{
               color: "white",
-              fontSize: 50,
+              fontSize: 70,
               fontStyle: "normal",
               letterSpacing: "-0.025em",
               lineHeight: 1.4,
@@ -612,12 +595,12 @@ app.frame("/donate/:chainId/:poolId/:count/", async (c) => {
               <img
                 src={XLogo.src}
                 alt="X Logo"
-                style={{ width: 20, height: 20, marginRight: 10 }}
+                style={{ width: 40, height: 40, marginRight: 10 }}
               />
               <div
                 style={{
                   color: "white",
-                  fontSize: 30,
+                  fontSize: 40,
                 }}
               >
                 {metadata?.projectTwitter}
@@ -636,12 +619,12 @@ app.frame("/donate/:chainId/:poolId/:count/", async (c) => {
               <img
                 src={GithubLogo.src}
                 alt="Github Logo"
-                style={{ width: 20, height: 20, marginRight: 10 }}
+                style={{ width: 40, height: 40, marginRight: 10 }}
               />
               <div
                 style={{
                   color: "white",
-                  fontSize: 30,
+                  fontSize: 40,
                 }}
               >
                 {metadata?.projectGithub}
@@ -705,27 +688,17 @@ app.frame("/donate/:chainId/:poolId/:count/", async (c) => {
             </div>
           </div>
         </div>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            padding: "0 300px",
-            marginBottom: 20,
-          }}
-        >
-          <div style={{ color: "white", fontSize: 20 }}>
-            {`${truncateText(metadata?.description, 450)}`}
-          </div>
-        </div>
+        <div style={{ color: "white", fontSize: 30 }}>{`${truncateText(
+          metadata?.description,
+          250
+        )}`}</div>
       </div>
     ),
-    imageAspectRatio: "1:1",
     intents: intents,
   });
 });
 
-app.transaction("/allocate/:chainId/:poolId/:recipientId/", (c) => {
+app.transaction("/allocate/:chainId/:poolId/:recipientId/", async (c) => {
   const { inputText } = c;
   const { chainId, poolId, recipientId } = c.req.param();
 
