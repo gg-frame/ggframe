@@ -3,14 +3,8 @@ import type { Metadata } from "next";
 
 import styles from "./page.module.css";
 
-const url = process.env.NEXT_PUBLIC_VERCEL_URL!;
-
-if (!process.env.NEXT_PUBLIC_VERCEL_URL) {
-  throw new Error("NEXT_PUBLIC_VERCEL_URL is not defined");
-}
-
 export async function generateMetadata(): Promise<Metadata> {
-  const frameTags = await getFrameMetadata(`${url}/api`);
+  const frameTags = await getFrameMetadata(`https://ggframe.xyz/api`);
   return {
     other: frameTags,
   };

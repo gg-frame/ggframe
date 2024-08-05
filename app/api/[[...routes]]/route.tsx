@@ -20,12 +20,6 @@ import {
   truncateText,
 } from "@/utils";
 
-if (!process.env.NEXT_PUBLIC_VERCEL_URL) {
-  throw new Error("NEXT_PUBLIC_VERCEL_URL is not defined");
-}
-
-const domainURL = process.env.NEXT_PUBLIC_VERCEL_URL!;
-
 if (!process.env.IPFS_BASE_URL) {
   throw new Error("IPFS_BASE_URL is not defined");
 }
@@ -242,7 +236,7 @@ app.frame("/cast", async (c) => {
 
   const text = `Donate%20to%20${metadata?.title}%20on%20Gitcoin!`;
 
-  const url = `https://warpcast.com/~/compose?text=${text}&embeds[]=${domainURL}/api/donate/${chainId}/${poolId}/${count}`;
+  const url = `https://warpcast.com/~/compose?text=${text}&embeds[]=https://ggframe.xyz/api/donate/${chainId}/${poolId}/${count}`;
   if (status !== "APPROVED") {
     return c.res({
       image: (
