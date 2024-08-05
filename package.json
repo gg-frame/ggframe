@@ -13,10 +13,10 @@
   "dependencies": {
     "@neynar/nodejs-sdk": "^1.31.0",
     "ethers": "^6.13.1",
-    "frog": "^0.11.9",
+    "frog": "^0.15.9",
     "graphql-request": "^7.0.1",
     "hono": "^4.4.7",
-    "next": "14.1.0",
+    "next": "14.2.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "sharp": "^0.33.4"

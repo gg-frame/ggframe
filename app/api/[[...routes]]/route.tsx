@@ -25,6 +25,7 @@ if (!process.env.IPFS_BASE_URL) {
 }
 
 const app = new Frog({
+  title: "ggframe",
   assetsPath: "/",
   basePath: "/api",
   browserLocation: "/",
@@ -43,7 +44,7 @@ const app = new Frog({
   },
 });
 
-app.frame("/", async (c) => {
+app.frame("/", (c) => {
   return c.res({
     image: (
       <div
@@ -112,6 +113,7 @@ app.frame("/", async (c) => {
     ],
   });
 });
+
 app.frame("/create", (c) => {
   return c.res({
     image: (
@@ -723,7 +725,7 @@ app.frame("/donate/:chainId/:poolId/:count/", async (c) => {
   });
 });
 
-app.transaction("/allocate/:chainId/:poolId/:recipientId/", async (c) => {
+app.transaction("/allocate/:chainId/:poolId/:recipientId/", (c) => {
   const { inputText } = c;
   const { chainId, poolId, recipientId } = c.req.param();
 
