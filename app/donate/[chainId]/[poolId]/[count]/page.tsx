@@ -8,7 +8,7 @@ export async function generateMetadata({
   params: { poolId: string; chainId: string; count: string };
 }): Promise<Metadata> {
   const frameTags = await getFrameMetadata(
-    `https://ggframe.xyz/api/api/donate/${params.chainId}/${params.poolId}/${params.count}`
+    `https://ggframe.xyz/api/donate/${params.chainId}/${params.poolId}/${params.count}`
   );
 
   return {
