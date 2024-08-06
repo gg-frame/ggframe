@@ -352,7 +352,7 @@ app.frame("/cast", async (c) => {
               </div>
             </div>
           )}
-          {metadata?.projectGithub && (
+          {/* {metadata?.projectGithub && (
             <div
               style={{
                 display: "flex",
@@ -375,7 +375,7 @@ app.frame("/cast", async (c) => {
                 {metadata?.projectGithub}
               </div>
             </div>
-          )}
+          )} */}
         </div>
 
         <div
@@ -607,7 +607,7 @@ app.frame("/donate/:chainId/:poolId/:count/", async (c) => {
               </div>
             </div>
           )}
-          {metadata?.projectGithub && (
+          {/* {metadata?.projectGithub && (
             <div
               style={{
                 display: "flex",
@@ -630,7 +630,7 @@ app.frame("/donate/:chainId/:poolId/:count/", async (c) => {
                 {metadata?.projectGithub}
               </div>
             </div>
-          )}
+          )} */}
         </div>
 
         <div
