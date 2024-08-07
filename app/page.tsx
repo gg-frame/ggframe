@@ -71,7 +71,7 @@ export default function Home() {
         </a>
 
         <a
-          href="https://warpcast.com/ggframe"
+          href="https://warpcast.com/ggframe.eth"
           className={styles.card}
           target="_blank"
           rel="noopener noreferrer"
