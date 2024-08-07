@@ -1,7 +1,7 @@
 /** @jsxImportSource frog/jsx */
 
 import { allo } from "@/abis/Allo";
-import { fetchGrant } from "@/hooks/useRegisteredEvent";
+import { fetchGrant, fetchProject } from "@/hooks/useRegisteredEvent";
 import { Button, Frog, TextInput, parseEther } from "frog";
 import { devtools } from "frog/dev";
 import { handle } from "frog/next";
@@ -227,10 +227,21 @@ app.frame("/cast", async (c) => {
   const data = await fetchGrant(Number(chainId), poolId!, count);
 
   const applicationData = data.data?.round.applications[0];
+  const canonicalChainID = applicationData?.project.metadata.canonical?.chainId;
 
   const status = applicationData?.status;
 
-  const metadata = applicationData?.project.metadata;
+  let metadata;
+
+  if (canonicalChainID) {
+    const fetchedMetadata = await fetchProject(
+      canonicalChainID,
+      applicationData?.projectId
+    );
+    metadata = fetchedMetadata?.data?.project.metadata;
+  } else {
+    metadata = applicationData?.project.metadata;
+  }
 
   const text = `Donate%20to%20${metadata?.title}%20on%20Gitcoin!`;
 
@@ -453,10 +464,20 @@ app.frame("/donate/:chainId/:poolId/:count/", async (c) => {
 
   const applicationData = data.data?.round.applications[0];
   const roundData = data.data?.round;
+  const canonicalChainID = applicationData?.project.metadata.canonical?.chainId;
 
   const status = applicationData?.status;
+  let metadata;
 
-  const metadata = applicationData?.project.metadata;
+  if (canonicalChainID) {
+    const fetchedMetadata = await fetchProject(
+      canonicalChainID,
+      applicationData?.projectId
+    );
+    metadata = fetchedMetadata?.data?.project.metadata;
+  } else {
+    metadata = applicationData?.project.metadata;
+  }
 
   const start = new Date(roundData.donationsStartTime);
   const end = new Date(roundData.donationsEndTime);
