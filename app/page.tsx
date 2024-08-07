@@ -85,7 +85,7 @@ export default function Home() {
         </a>
 
         <a
-          href="https://x.com/ggframexyz"
+          href="https://x.com/ggframe_xyz"
           className={styles.card}
           target="_blank"
           rel="noopener noreferrer"
