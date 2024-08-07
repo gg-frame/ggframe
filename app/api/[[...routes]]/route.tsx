@@ -165,7 +165,7 @@ app.frame("/create", (c) => {
             whiteSpace: "pre-wrap",
           }}
         >
-          {`e.g. https://explorer.gitcoin.co/#/round/42161/25/156`}
+          {`e.g. https://explorer.gitcoin.co/#/round/42161/389/55`}
         </div>
       </div>
     ),
