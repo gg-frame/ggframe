@@ -1,7 +1,7 @@
 /** @jsxImportSource @airstack/frog/jsx */
 
 import { allo } from "@/abis/Allo";
-import { fetchGrant } from "@/hooks/useRegisteredEvent";
+import { fetchGrant, fetchProject } from "@/hooks/useRegisteredEvent";
 import { Button, Frog, TextInput, parseEther } from "@airstack/frog";
 import { devtools } from "@airstack/frog/dev";
 import { handle } from "@airstack/frog/next";
@@ -15,7 +15,6 @@ import {
   availableChainId,
   extractRoundInfo,
   getChainId,
-  gradients,
   truncateText,
 } from "@/utils";
 
@@ -28,7 +27,7 @@ if (!process.env.AIRSTACK_API_KEY) {
 }
 
 const app = new Frog({
-  title: "ggframe",
+  title: "GG Frame",
   apiKey: process.env.AIRSTACK_API_KEY as string,
   assetsPath: "/",
   basePath: "/api",
@@ -172,7 +171,7 @@ app.frame("/create", async function (c) {
             whiteSpace: "pre-wrap",
           }}
         >
-          {`e.g. https://explorer.gitcoin.co/#/round/42161/25/156`}
+          {`e.g. https://explorer.gitcoin.co/#/round/42161/389/55`}
         </div>
       </div>
     ),
@@ -234,13 +233,21 @@ app.frame("/cast", async function (c) {
   const data = await fetchGrant(Number(chainId), poolId!, count);
 
   const applicationData = data.data?.round.applications[0];
+  const canonicalChainID = applicationData?.project.metadata.canonical?.chainId;
 
   const status = applicationData?.status;
 
-  const metadata = applicationData?.project.metadata;
+  let metadata;
 
-  const randomGradient =
-    gradients[Math.floor(Math.random() * gradients.length)];
+  if (canonicalChainID) {
+    const fetchedMetadata = await fetchProject(
+      canonicalChainID,
+      applicationData?.projectId
+    );
+    metadata = fetchedMetadata?.data?.project.metadata;
+  } else {
+    metadata = applicationData?.project.metadata;
+  }
 
   const text = `Donate%20to%20${metadata?.title}%20on%20Gitcoin!`;
 
@@ -286,7 +293,7 @@ app.frame("/cast", async function (c) {
       <div
         style={{
           alignItems: "center",
-          background: randomGradient,
+          background: "linear-gradient(to right, #36D1DC, #5B86E5)",
           backgroundSize: "100% 100%",
           display: "flex",
           flexDirection: "column",
@@ -362,7 +369,7 @@ app.frame("/cast", async function (c) {
               </div>
             </div>
           )}
-          {metadata?.projectGithub && (
+          {/* {metadata?.projectGithub && (
             <div
               style={{
                 display: "flex",
@@ -385,7 +392,7 @@ app.frame("/cast", async function (c) {
                 {metadata?.projectGithub}
               </div>
             </div>
-          )}
+          )} */}
         </div>
 
         <div
@@ -463,13 +470,20 @@ app.frame("/donate/:chainId/:poolId/:count/", async function (c) {
 
   const applicationData = data.data?.round.applications[0];
   const roundData = data.data?.round;
+  const canonicalChainID = applicationData?.project.metadata.canonical?.chainId;
 
   const status = applicationData?.status;
+  let metadata;
 
-  const metadata = applicationData?.project.metadata;
-
-  const randomGradient =
-    gradients[Math.floor(Math.random() * gradients.length)];
+  if (canonicalChainID) {
+    const fetchedMetadata = await fetchProject(
+      canonicalChainID,
+      applicationData?.projectId
+    );
+    metadata = fetchedMetadata?.data?.project.metadata;
+  } else {
+    metadata = applicationData?.project.metadata;
+  }
 
   const start = new Date(roundData.donationsStartTime);
   const end = new Date(roundData.donationsEndTime);
@@ -544,7 +558,7 @@ app.frame("/donate/:chainId/:poolId/:count/", async function (c) {
       <div
         style={{
           alignItems: "center",
-          background: randomGradient,
+          background: "linear-gradient(to right, #36D1DC, #5B86E5)",
           backgroundSize: "100% 100%",
           display: "flex",
           flexDirection: "column",
@@ -620,7 +634,7 @@ app.frame("/donate/:chainId/:poolId/:count/", async function (c) {
               </div>
             </div>
           )}
-          {metadata?.projectGithub && (
+          {/* {metadata?.projectGithub && (
             <div
               style={{
                 display: "flex",
@@ -643,7 +657,7 @@ app.frame("/donate/:chainId/:poolId/:count/", async function (c) {
                 {metadata?.projectGithub}
               </div>
             </div>
-          )}
+          )} */}
         </div>
 
         <div

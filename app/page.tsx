@@ -1,14 +1,16 @@
-import { getFrameMetadata } from "@airstack/frog/next";
+// /** @jsxImportSource @airstack/frog/jsx */
+
+// import { getFrameMetadata } from "@airstack/frog/next";
 import type { Metadata } from "next";
 
 import styles from "./page.module.css";
 
-export async function generateMetadata(): Promise<Metadata> {
-  const frameTags = await getFrameMetadata(`http://localhost:3000/api`);
-  return {
-    other: frameTags,
-  };
-}
+// export async function generateMetadata(): Promise<Metadata> {
+//   const frameTags = await getFrameMetadata(`http://localhost:3000/api`);
+//   return {
+//     other: frameTags,
+//   };
+// }
 
 export default function Home() {
   return (
@@ -71,7 +73,7 @@ export default function Home() {
         </a>
 
         <a
-          href="https://warpcast.com/ggframe"
+          href="https://warpcast.com/ggframe.eth"
           className={styles.card}
           target="_blank"
           rel="noopener noreferrer"
@@ -85,7 +87,7 @@ export default function Home() {
         </a>
 
         <a
-          href="https://x.com/ggframexyz"
+          href="https://x.com/ggframe_xyz"
           className={styles.card}
           target="_blank"
           rel="noopener noreferrer"

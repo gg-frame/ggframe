@@ -11,20 +11,23 @@
     "clean": "rm -rf .next node_modules && pnpm install && pnpm build"
   },
   "dependencies": {
-    "@airstack/frog": "^0.0.10",
+    "@airstack/frog": "^0.0.19",
+    "@resvg/resvg-js": "^2.6.2",
+    "dotenv": "^16.4.5",
     "ethers": "^6.13.2",
     "graphql-request": "^7.1.0",
-    "hono": "^4.4.7",
-    "next": "14.1.0",
+    "hono": "^4.5.5",
+    "next": "14.2.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "sharp": "^0.33.4"
   },
   "devDependencies": {
-    "@types/node": "^20.14.5",
+    "@types/node": "^22.3.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "typescript": "^5.4.5",
-    "vercel": "^32.7.2"
+    "eslint": "^8.57.0",
+    "eslint-config-next": "14.1.0",
+    "typescript": "^5.5.4"
   }
 }
