@@ -1,5 +1,5 @@
 import React from "react";
-import { getFrameMetadata } from "@airstack/frog/next";
+import { getFrameMetadata } from "frog/next";
 import type { Metadata } from "next";
 
 export async function generateMetadata({

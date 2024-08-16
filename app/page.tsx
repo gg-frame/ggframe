@@ -1,6 +1,4 @@
-// /** @jsxImportSource @airstack/frog/jsx */
-
-import { getFrameMetadata } from "@airstack/frog/next";
+import { getFrameMetadata } from "frog/next";
 import type { Metadata } from "next";
 
 import styles from "./page.module.css";
