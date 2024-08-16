@@ -48,7 +48,7 @@ const app = new Frog({
   },
 });
 
-app.frame("/", async function (c) {
+app.frame("/", async (c) => {
   return c.res({
     image: (
       <div
@@ -117,7 +117,7 @@ app.frame("/", async function (c) {
     ],
   });
 });
-app.frame("/create", async function (c) {
+app.frame("/create", (c) => {
   return c.res({
     image: (
       <div
@@ -183,7 +183,7 @@ app.frame("/create", async function (c) {
   });
 });
 
-app.frame("/cast", async function (c) {
+app.frame("/cast", async (c) => {
   const { inputText } = c;
 
   const pjURL = inputText!;
@@ -463,7 +463,7 @@ app.frame("/cast", async function (c) {
   });
 });
 
-app.frame("/donate/:chainId/:poolId/:count/", async function (c) {
+app.frame("/donate/:chainId/:poolId/:count/", async (c) => {
   const { chainId, poolId, count } = c.req.param();
 
   const data = await fetchGrant(Number(chainId), poolId!, count);
@@ -725,7 +725,7 @@ app.frame("/donate/:chainId/:poolId/:count/", async function (c) {
   });
 });
 
-app.transaction("/allocate/:chainId/:poolId/:recipientId/", async function (c) {
+app.transaction("/allocate/:chainId/:poolId/:recipientId/", async (c) => {
   const { inputText } = c;
   const { chainId, poolId, recipientId } = c.req.param();
 

@@ -15,6 +15,7 @@
     "@resvg/resvg-js": "^2.6.2",
     "dotenv": "^16.4.5",
     "ethers": "^6.13.2",
+    "frog": "^0.16.1",
     "graphql-request": "^7.1.0",
     "hono": "^4.5.5",
     "next": "14.2.5",
