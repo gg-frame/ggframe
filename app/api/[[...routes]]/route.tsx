@@ -27,7 +27,7 @@ if (!process.env.AIRSTACK_API_KEY) {
 }
 
 const app = new Frog({
-  title: "GG Frame",
+  // title: "GG Frame", // <= @airstack/frog v0.0.18 need to set title
   apiKey: process.env.AIRSTACK_API_KEY as string,
   assetsPath: "/",
   basePath: "/api",
