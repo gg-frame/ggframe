@@ -1,11 +1,11 @@
-/** @jsxImportSource frog/jsx */
+/** @jsxImportSource @airstack/frog/jsx */
 
 import { allo } from "@/abis/Allo";
 import { fetchGrant, fetchProject } from "@/hooks/useRegisteredEvent";
-import { Button, Frog, TextInput, parseEther } from "frog";
-import { devtools } from "frog/dev";
-import { handle } from "frog/next";
-import { serveStatic } from "frog/serve-static";
+import { Button, Frog, TextInput, parseEther } from "@airstack/frog";
+import { devtools } from "@airstack/frog/dev";
+import { handle } from "@airstack/frog/next";
+import { serveStatic } from "@airstack/frog/serve-static";
 import GithubLogo from "@/public/github-mark/github-mark.png";
 import XLogo from "@/public/x-logo/logo-white.png";
 import { ethers } from "ethers";
@@ -22,11 +22,17 @@ if (!process.env.IPFS_BASE_URL) {
   throw new Error("IPFS_BASE_URL is not defined");
 }
 
+if (!process.env.AIRSTACK_API_KEY) {
+  throw new Error("AIRSTACK_API_KEY is not defined");
+}
+
 const app = new Frog({
-  title: "GG Frame",
+  // title: "GG Frame", // <= @airstack/frog v0.0.18 need to set title
+  apiKey: process.env.AIRSTACK_API_KEY as string,
   assetsPath: "/",
   basePath: "/api",
   browserLocation: "/",
+
   imageOptions: {
     fonts: [
       {

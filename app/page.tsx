@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import styles from "./page.module.css";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const frameTags = await getFrameMetadata(`https://ggframe.xyz/api`);
+  const frameTags = await getFrameMetadata(`http://localhost:3000/api`);
   return {
     other: frameTags,
   };
